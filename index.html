@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Sohee's portfolio: experience, projects, and leadership.">
+  <meta name="theme-color" content="#09090b">
+  <meta property="og:title" content="sohee — my work">
+  <meta property="og:description" content="Experience, projects, and leadership.">
+  <meta property="og:type" content="website">
+  <title>sohee — my work</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Rubik:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./content.js" defer></script>
+  <script src="./app.js" defer></script>
+  <script src="./fluid.js" defer></script>
+</head>
+<body>
+  <div class="dot-pattern" aria-hidden="true"></div>
+  <canvas id="fluid" aria-hidden="true"></canvas>
+  <a class="skip-link" href="#work">Skip to work</a>
+  <header class="site-header">
+    <a class="wordmark" href="#home" aria-label="Sohee, home" data-name>sohee</a>
+    <nav aria-label="Main navigation">
+      <a href="#work">my work</a>
+      <a href="#contact">say hello <span aria-hidden="true">↗</span></a>
+      <div class="header-socials" id="header-socials"></div>
+    </nav>
+  </header>
+
+  <main id="home">
+    <section class="hero section-wrap" aria-labelledby="hero-title">
+      <div class="hero-split">
+        <div class="hero-copy bento-box" data-tilt>
+          <div class="hero-top">
+            <p class="eyebrow">A LITTLE COLLECTION OF WHAT I DO</p>
+            <p class="hero-greeting">Hey, I'm <span data-name>sohee</span> <span class="wave-hand" aria-hidden="true">👋</span></p>
+            <div class="status-row">
+              <span class="status-dot" aria-hidden="true"></span>
+              <p class="hero-subtitle" id="intro"></p>
+            </div>
+            <div class="hero-lockup">
+              <h1 id="hero-title">hello,<br>i'm <em data-name>sohee</em></h1>
+            </div>
+          </div>
+          <div class="hero-actions">
+            <div class="cta-group">
+              <a class="cta-pill" href="#work">My work <span aria-hidden="true">↓</span></a>
+              <a class="cta-pill" href="#contact">Say hello <span aria-hidden="true">↗</span></a>
+            </div>
+            <div class="cta-group" id="hero-ctas"></div>
+          </div>
+        </div>
+        <div class="hero-side">
+          <div class="hero-emoji-stage" id="hero-emoji-stage" aria-hidden="true">
+            <div class="hero-emoji-card bento-box" data-tilt>
+              <div class="emoji-glow"></div>
+              <span class="main-emoji" id="hero-emoji">🧑‍💻</span>
+              <div class="floating-badges" id="floating-badges"></div>
+              <span class="doodle-note">a work in progress. in the best way.</span>
+            </div>
+          </div>
+          <div class="tech-stack-card bento-box" data-tilt>
+            <div class="bento-header">
+              <h3>Tech Stack</h3>
+            </div>
+            <div class="tech-badges" id="tech-stack"></div>
+          </div>
+        </div>
+      </div>
+      <div class="folder-nav" aria-label="Explore work by category">
+        <button class="folder-link" data-folder="experience">
+          <span class="folder-art folder-sage" aria-hidden="true">
+            <span class="paper paper-one"><span class="paper-line"></span><span class="paper-line"></span><span class="paper-line short"></span></span>
+            <span class="paper paper-two"><span class="mini-chart"><i></i><i></i><i></i></span></span>
+            <span class="folder-front"><svg viewBox="0 0 60 45"><path d="M14 30 28 13l8 9 11-14M38 8h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </span>
+          <span class="folder-label">experience <span>01</span></span>
+        </button>
+        <button class="folder-link" data-folder="projects">
+          <span class="folder-art folder-lilac" aria-hidden="true">
+            <span class="paper paper-one"><span class="mini-window"></span><span class="paper-line"></span></span>
+            <span class="paper paper-two"><span class="paper-code">&lt; / &gt;</span></span>
+            <span class="folder-front"><svg viewBox="0 0 60 45"><path d="m23 13-12 10 12 10m14-20 12 10-12 10M33 8l-6 30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </span>
+          <span class="folder-label">projects <span>02</span></span>
+        </button>
+        <button class="folder-link" data-folder="leadership">
+          <span class="folder-art folder-peach" aria-hidden="true">
+            <span class="paper paper-one"><span class="paper-star">✳</span></span>
+            <span class="paper paper-two"><span class="paper-line"></span><span class="paper-line short"></span></span>
+            <span class="folder-front"><svg viewBox="0 0 60 45"><path d="M30 35S9 23 14 15c5-8 14-2 16 3 2-5 11-11 16-3 5 8-16 20-16 20Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+          </span>
+          <span class="folder-label">leadership <span>03</span></span>
+        </button>
+      </div>
+      <a class="scroll-cue" href="#work"><span>TAKE A LITTLE LOOK</span><span aria-hidden="true">↓</span></a>
+    </section>
+
+    <section class="work-section section-wrap" id="work" aria-labelledby="work-title">
+      <div class="section-heading">
+        <p class="eyebrow">THE PORTFOLIO</p>
+        <h2 id="work-title">my work!</h2>
+      </div>
+      <div class="work-toolbar">
+        <div class="filters" role="group" aria-label="Filter portfolio">
+          <button class="filter active" data-filter="all" aria-pressed="true">everything <span>06</span></button>
+          <button class="filter" data-filter="experience" aria-pressed="false">experience</button>
+          <button class="filter" data-filter="projects" aria-pressed="false">projects</button>
+          <button class="filter" data-filter="leadership" aria-pressed="false">leadership</button>
+        </div>
+        <p class="result-count" id="result-count" role="status" aria-live="polite"></p>
+      </div>
+      <div class="work-grid" id="work-grid"></div>
+      <p class="template-note"><span aria-hidden="true">✳</span> A portfolio in progress. Open a card for the story to tell.</p>
+      <noscript><p>Enable JavaScript to explore the portfolio cards. This editable example includes McKinsey — Business Analyst, Google, project outlines, and leadership outlines.</p></noscript>
+    </section>
+
+    <section class="path-section section-wrap" id="path" aria-labelledby="path-title">
+      <div class="path-heading">
+        <p class="eyebrow">HISTORY & MILESTONES</p>
+        <h2 id="path-title">걸어온<br><em>path so far.</em></h2>
+      </div>
+      <div class="path-timeline" id="path-timeline">
+        <div class="path-line" aria-hidden="true">
+          <div class="path-line-fill" id="path-line-fill"></div>
+        </div>
+        <div class="path-items" id="path-items"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="contact">
+    <div class="footer-top section-wrap">
+      <div>
+        <p class="eyebrow">GOOD THINGS START WITH A CONVERSATION</p>
+        <h2>let's make<br><em>something matter.</em> <span aria-hidden="true">↗</span></h2>
+      </div>
+      <div class="contact-block" id="contact-links"></div>
+    </div>
+    <div class="footer-bottom section-wrap">
+      <a class="wordmark" href="#home" data-name>sohee</a>
+      <span>A little collection. Always evolving.</span>
+      <a href="#home">back to the top ↑</a>
+    </div>
+  </footer>
+
+  <dialog class="story-dialog" id="story-dialog" aria-labelledby="story-title">
+    <div class="dialog-shell">
+      <button class="dialog-close" aria-label="Close story" autofocus>×</button>
+      <div id="story-content"></div>
+    </div>
+  </dialog>
+</body>
+</html>
