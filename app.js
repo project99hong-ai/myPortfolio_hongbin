@@ -63,16 +63,16 @@ function setActiveTab(filter) {
     button.classList.toggle("active", selected);
     button.setAttribute("aria-pressed", String(selected));
   });
-  const count = filter === "all"
-    ? portfolio.cards.length
-    : portfolio.cards.filter(c => c.category === filter).length;
-  document.querySelector("#result-count").textContent = `${String(count).padStart(2, "0")} ${count === 1 ? "story" : "stories"} / ${filter === "all" ? "the whole collection" : filter}`;
 }
 
 function scrollToCategory(filter) {
-  if (filter !== "all" && !Object.hasOwn(categoryNames, filter)) throw new Error(`Unknown category: ${filter}`);
+  if (filter !== "all" && filter !== "path" && !Object.hasOwn(categoryNames, filter)) throw new Error(`Unknown category: ${filter}`);
   setActiveTab(filter);
-  const target = filter === "all" ? document.querySelector("#work") : document.querySelector(`#section-${filter}`);
+  const target = filter === "all"
+    ? document.querySelector("#work")
+    : filter === "path"
+      ? document.querySelector("#path")
+      : document.querySelector(`#section-${filter}`);
   if (target) {
     target.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
   }
@@ -148,7 +148,7 @@ if ("IntersectionObserver" in window) {
     const visible = entries.find(e => e.isIntersecting);
     if (visible) setActiveTab(visible.target.dataset.categorySection);
   }, { rootMargin: "-25% 0px -60% 0px" });
-  document.querySelectorAll(".category-group").forEach(sec => observer.observe(sec));
+  document.querySelectorAll("[data-category-section]").forEach(sec => observer.observe(sec));
 }
 
 const pathItemsRoot = document.querySelector("#path-items");

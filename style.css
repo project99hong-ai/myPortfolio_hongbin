@@ -88,8 +88,9 @@ h2 { font-family: var(--serif); font-weight: 600; letter-spacing: -1.5px; color:
 .icon-sage { background: #c3cbb8; }
 .icon-lilac { background: #d0c4dc; }
 .icon-peach { background: #e5c4ab; }
+.icon-sky { background: #b8d0db; }
 .filter span { margin-left: 2px; opacity: .65; font-size: 10px; }
-.result-count { font-size: 11px; color: var(--muted); white-space: nowrap; }
+.filter-right { margin-left: auto; }
 .work-grid { display: flex; flex-direction: column; gap: 56px; }
 .category-group { scroll-margin-top: 164px; }
 .category-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
@@ -157,7 +158,7 @@ h2 { font-family: var(--serif); font-weight: 600; letter-spacing: -1.5px; color:
 .mentorship-path { position: absolute; width: 80%; height: 100%; top: -22px; right: -17px; }
 .template-note { margin: 40px 0 0; text-align: center; color: #737373; font-size: 11px; line-height: 1.7; }
 .template-note span { margin-right: 6px; }
-.path-section { padding: 40px 0 110px; }
+.path-section { padding: 80px 0 10px; scroll-margin-top: 150px; }
 .path-heading { margin-bottom: 52px; }
 .path-heading .eyebrow { margin: 0 0 12px; }
 .path-heading h2 { margin: 0; font-size: clamp(42px, 5vw, 60px); line-height: 1.05; letter-spacing: -1.5px; }

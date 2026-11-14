@@ -94,23 +94,26 @@
             leadership <span>03</span>
           </button>
         </div>
-        <p class="result-count" id="result-count" role="status" aria-live="polite"></p>
+        <button class="filter filter-right" data-filter="path" aria-pressed="false">
+          <i class="filter-icon icon-sky" aria-hidden="true"><svg viewBox="0 0 60 45"><path d="M30 7v31M18 15h12M30 25h12M18 34h12" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><circle cx="30" cy="15" r="4" fill="currentColor"/><circle cx="30" cy="25" r="4" fill="currentColor"/><circle cx="30" cy="34" r="4" fill="currentColor"/></svg></i>
+          history &amp; milestones <span>04</span>
+        </button>
       </div>
       <div class="work-grid" id="work-grid"></div>
       <p class="template-note"><span aria-hidden="true">✳</span> A portfolio in progress. Open a card for the story to tell.</p>
       <noscript><p>Enable JavaScript to explore the portfolio cards. This editable example includes McKinsey — Business Analyst, Google, project outlines, and leadership outlines.</p></noscript>
-    </section>
 
-    <section class="path-section section-wrap" id="path" aria-labelledby="path-title">
-      <div class="path-heading">
-        <p class="eyebrow">HISTORY & MILESTONES</p>
-        <h2 id="path-title">걸어온<br><em>path so far.</em></h2>
-      </div>
-      <div class="path-timeline" id="path-timeline">
-        <div class="path-line" aria-hidden="true">
-          <div class="path-line-fill" id="path-line-fill"></div>
+      <div class="path-section" id="path" data-category-section="path" aria-labelledby="path-title">
+        <div class="path-heading">
+          <p class="eyebrow">HISTORY & MILESTONES</p>
+          <h2 id="path-title">걸어온<br><em>path so far.</em></h2>
         </div>
-        <div class="path-items" id="path-items"></div>
+        <div class="path-timeline" id="path-timeline">
+          <div class="path-line" aria-hidden="true">
+            <div class="path-line-fill" id="path-line-fill"></div>
+          </div>
+          <div class="path-items" id="path-items"></div>
+        </div>
       </div>
     </section>
 
