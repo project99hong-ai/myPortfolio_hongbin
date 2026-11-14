@@ -142,12 +142,6 @@ grid.replaceChildren(
 );
 document.querySelector('[data-filter="all"] span').textContent = String(portfolio.cards.length).padStart(2, "0");
 filterButtons.forEach(button => button.addEventListener("click", () => scrollToCategory(button.dataset.filter)));
-document.querySelectorAll("[data-folder]").forEach(button => {
-  button.addEventListener("click", () => {
-    scrollToCategory(button.dataset.folder);
-    filterButtons.find(filter => filter.dataset.filter === button.dataset.folder).focus({ preventScroll: true });
-  });
-});
 
 if ("IntersectionObserver" in window) {
   const observer = new IntersectionObserver(entries => {
@@ -273,7 +267,7 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
     hero.style.setProperty("--my", ((e.clientY / innerHeight) - 0.5).toFixed(3));
   }, { passive: true });
 
-  document.querySelectorAll(".bento-box, .folder-link, .work-card").forEach(el => {
+  document.querySelectorAll(".bento-box, .work-card").forEach(el => {
     el.addEventListener("pointermove", e => {
       const rect = el.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width - 0.5;

@@ -71,33 +71,6 @@
           </div>
         </div>
       </div>
-      <div class="folder-nav" aria-label="Explore work by category">
-        <button class="folder-link" data-folder="experience">
-          <span class="folder-art folder-sage" aria-hidden="true">
-            <span class="paper paper-one"><span class="paper-line"></span><span class="paper-line"></span><span class="paper-line short"></span></span>
-            <span class="paper paper-two"><span class="mini-chart"><i></i><i></i><i></i></span></span>
-            <span class="folder-front"><svg viewBox="0 0 60 45"><path d="M14 30 28 13l8 9 11-14M38 8h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </span>
-          <span class="folder-label">experience <span>01</span></span>
-        </button>
-        <button class="folder-link" data-folder="projects">
-          <span class="folder-art folder-lilac" aria-hidden="true">
-            <span class="paper paper-one"><span class="mini-window"></span><span class="paper-line"></span></span>
-            <span class="paper paper-two"><span class="paper-code">&lt; / &gt;</span></span>
-            <span class="folder-front"><svg viewBox="0 0 60 45"><path d="m23 13-12 10 12 10m14-20 12 10-12 10M33 8l-6 30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </span>
-          <span class="folder-label">projects <span>02</span></span>
-        </button>
-        <button class="folder-link" data-folder="leadership">
-          <span class="folder-art folder-peach" aria-hidden="true">
-            <span class="paper paper-one"><span class="paper-star">✳</span></span>
-            <span class="paper paper-two"><span class="paper-line"></span><span class="paper-line short"></span></span>
-            <span class="folder-front"><svg viewBox="0 0 60 45"><path d="M30 35S9 23 14 15c5-8 14-2 16 3 2-5 11-11 16-3 5 8-16 20-16 20Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
-          </span>
-          <span class="folder-label">leadership <span>03</span></span>
-        </button>
-      </div>
-      <a class="scroll-cue" href="#work"><span>TAKE A LITTLE LOOK</span><span aria-hidden="true">↓</span></a>
     </section>
 
     <section class="work-section section-wrap" id="work" aria-labelledby="work-title">
@@ -108,9 +81,18 @@
       <div class="work-toolbar">
         <div class="filters" role="group" aria-label="Filter portfolio">
           <button class="filter active" data-filter="all" aria-pressed="true">everything <span>06</span></button>
-          <button class="filter" data-filter="experience" aria-pressed="false">experience</button>
-          <button class="filter" data-filter="projects" aria-pressed="false">projects</button>
-          <button class="filter" data-filter="leadership" aria-pressed="false">leadership</button>
+          <button class="filter" data-filter="experience" aria-pressed="false">
+            <i class="filter-icon icon-sage" aria-hidden="true"><svg viewBox="0 0 60 45"><path d="M14 30 28 13l8 9 11-14M38 8h9v9" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></i>
+            experience <span>01</span>
+          </button>
+          <button class="filter" data-filter="projects" aria-pressed="false">
+            <i class="filter-icon icon-lilac" aria-hidden="true"><svg viewBox="0 0 60 45"><path d="m23 13-12 10 12 10m14-20 12 10-12 10M33 8l-6 30" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></i>
+            projects <span>02</span>
+          </button>
+          <button class="filter" data-filter="leadership" aria-pressed="false">
+            <i class="filter-icon icon-peach" aria-hidden="true"><svg viewBox="0 0 60 45"><path d="M30 35S9 23 14 15c5-8 14-2 16 3 2-5 11-11 16-3 5 8-16 20-16 20Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/></svg></i>
+            leadership <span>03</span>
+          </button>
         </div>
         <p class="result-count" id="result-count" role="status" aria-live="polite"></p>
       </div>
