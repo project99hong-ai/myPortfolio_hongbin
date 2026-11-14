@@ -216,6 +216,35 @@ const contactIcons = {
   linkedin: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM3.5 9h3v12h-3ZM9 9h3v1.6c.7-1.2 1.8-1.9 3.4-1.9 3.1 0 4.6 1.9 4.6 5.4V21h-3v-6.4c0-2.1-.7-3.1-2.2-3.1-1.8 0-2.8 1.2-2.8 3.5v6H9Z"/></svg>',
   email: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>'
 };
+function makeGithubDropdown(accounts, btnClass, innerHTML) {
+  const wrap = element("div", "gh-menu-wrap");
+  const btn = element("button", btnClass);
+  btn.type = "button";
+  btn.innerHTML = innerHTML;
+  btn.setAttribute("aria-label", "GitHub");
+  btn.setAttribute("aria-haspopup", "true");
+  const menu = element("div", "gh-dropdown");
+  accounts.forEach(acc => {
+    const href = safeLink(acc.url);
+    if (!href) return;
+    const item = element("a", "gh-item");
+    item.href = href;
+    item.target = "_blank";
+    item.rel = "noopener noreferrer";
+    item.innerHTML = `<span><strong>${acc.label}</strong><small>${acc.note || ""}</small></span><span aria-hidden="true">↗</span>`;
+    menu.append(item);
+  });
+  btn.addEventListener("click", e => {
+    e.stopPropagation();
+    wrap.classList.toggle("open");
+  });
+  wrap.append(btn, menu);
+  return wrap;
+}
+document.addEventListener("click", () => {
+  document.querySelectorAll(".gh-menu-wrap.open").forEach(el => el.classList.remove("open"));
+});
+
 const links = [
   ["GitHub", portfolio.github, false, "github"],
   ["LinkedIn", portfolio.linkedin, false, "linkedin"],
@@ -223,39 +252,56 @@ const links = [
   ["Résumé ↗", portfolio.resume, false, null]
 ];
 links.forEach(([label, value, allowMail, icon]) => {
-  const href = safeLink(value, allowMail);
-  if (!href && !icon) return;
-  const link = element(href ? "a" : "span", "contact-icon");
-  if (icon) link.innerHTML = contactIcons[icon];
-  else link.textContent = label;
-  link.setAttribute("aria-label", href ? label : `${label} — add your details in content.js`);
-  link.title = href ? label : `Add your ${label} in content.js`;
-  if (href) {
-    link.href = href;
-    if (!allowMail) {
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-    }
+  const isMulti = Array.isArray(value) && value.length > 0;
+  const href = isMulti ? null : safeLink(value, allowMail);
+  if (!isMulti && !href && !icon) return;
+  if (isMulti) {
+    contactLinks.append(makeGithubDropdown(value, "contact-icon", contactIcons[icon]));
   } else {
-    link.setAttribute("role", "img");
+    const link = element(href ? "a" : "span", "contact-icon");
+    if (icon) link.innerHTML = contactIcons[icon];
+    else link.textContent = label;
+    link.setAttribute("aria-label", href ? label : `${label} — add your details in content.js`);
+    link.title = href ? label : `Add your ${label} in content.js`;
+    if (href) {
+      link.href = href;
+      if (!allowMail) {
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+      }
+    } else {
+      link.setAttribute("role", "img");
+    }
+    contactLinks.append(link);
   }
-  contactLinks.append(link);
 
   if (icon === "github" || icon === "linkedin") {
-    const headerLink = link.cloneNode(true);
-    headerLink.className = "social-icon";
-    headerSocials.append(headerLink);
+    if (isMulti) {
+      headerSocials.append(makeGithubDropdown(value, "social-icon", contactIcons[icon]));
+      heroCtas.append(makeGithubDropdown(value, "cta-pill cta-social", `${contactIcons[icon]}<span>${label}</span><span aria-hidden="true">▾</span>`));
+    } else {
+      const headerLink = element(href ? "a" : "span", "social-icon");
+      headerLink.innerHTML = contactIcons[icon];
+      headerLink.setAttribute("aria-label", href ? label : `${label} — add your details in content.js`);
+      headerLink.title = href ? label : `Add your ${label} in content.js`;
+      if (href) {
+        headerLink.href = href;
+        headerLink.target = "_blank";
+        headerLink.rel = "noopener noreferrer";
+      }
+      headerSocials.append(headerLink);
 
-    const pill = element(href ? "a" : "span", "cta-pill cta-social");
-    pill.innerHTML = `${contactIcons[icon]}<span>${label}</span><span aria-hidden="true">↗</span>`;
-    pill.setAttribute("aria-label", href ? label : `${label} — add your details in content.js`);
-    pill.title = href ? label : `Add your ${label} in content.js`;
-    if (href) {
-      pill.href = href;
-      pill.target = "_blank";
-      pill.rel = "noopener noreferrer";
+      const pill = element(href ? "a" : "span", "cta-pill cta-social");
+      pill.innerHTML = `${contactIcons[icon]}<span>${label}</span><span aria-hidden="true">↗</span>`;
+      pill.setAttribute("aria-label", href ? label : `${label} — add your details in content.js`);
+      pill.title = href ? label : `Add your ${label} in content.js`;
+      if (href) {
+        pill.href = href;
+        pill.target = "_blank";
+        pill.rel = "noopener noreferrer";
+      }
+      heroCtas.append(pill);
     }
-    heroCtas.append(pill);
   }
 });
 setActiveTab("all");

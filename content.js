@@ -7,8 +7,11 @@ const portfolio = {
   floatingEmojis: ["✨", "🚀", "💡", "🎨"],
   techStack: ["TypeScript", "JavaScript", "React", "Node.js", "Python", "HTML / CSS", "Git & GitHub", "Figma"],
   email: "",
-  github: "",
-  linkedin: "",
+  github: [
+    { label: "project99hong-ai", note: "본계정", url: "https://github.com/project99hong-ai" },
+    { label: "hongbinwee", note: "부계정", url: "https://github.com/hongbinwee" }
+  ],
+  linkedin: "https://www.linkedin.com/in/hongbin-wee-3660553bb",
   resume: "",
   cards: [
     {
