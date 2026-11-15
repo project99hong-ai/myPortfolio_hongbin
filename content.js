@@ -340,7 +340,21 @@ const portfolio = {
     // - M1-1 서울 지하철 분석 (9/27–10/01 보고서 정리): https://github.com/hongbinwee/codyssey-m/tree/main/M1-1
     // - M1-2 MySchedule AI (10/26 앱 소스·검증·배포·증빙 기록, PIKKU와 별개): https://github.com/hongbinwee/codyssey-m/tree/main/M1-2
   ],
+  // 정렬 기준: 종료 시점(끝난 날짜) 기준 최신순 — 현재 진행 중(`~ 현재`)이 최상단, 이후 종료 월(11월 → 10월 → 9월 → …) 역순 배치
   timeline: [
+    {
+      // 현재 진행 중 — 최상단 배치 (입사일·전체 운영 기간은 별도 확인 대상)
+      side: "left",
+      period: "2026.07 ~ 현재",
+      title: "시공간 (서울대 인액터스 소속)",
+      subtitle: "AX 전략 파트너",
+      highlight: "AX 컨설팅 사업화 & 사내 AI 전환 리딩",
+      cardId: "sigonggan",
+      bullets: [
+        "[AX Strategy] AX(AI Transformation) 컨설팅 사업 프로세스 체계화 및 신규 비즈니스 모델(BM) 기획",
+        "[Internal AX] 사내 업무 효율화를 위한 AX 도입 전략 수립 및 전환 리딩"
+      ]
+    },
     {
       // [P] 10/30–11/01 기획·개발·제출 준비 인계, KST 10/31–11/01 main 커밋 기록. 실제 착수·종료일 및 제출 여부는 별도 확인 대상.
       side: "right",
@@ -352,6 +366,32 @@ const portfolio = {
       bullets: [
         "[Overview] 계획·실행·재조정을 돕는 AI 일정 비서 팀 프로젝트",
         "[Status] 상세 역할·구현 범위·결과 정리 준비 중"
+      ]
+    },
+    {
+      // [Zero to One] 8/10 모집 공지, 8/27 design.md·AI PPT 공유, 9/02 키워드 공유 확인. 실제 시작·종료일 미확정(잠정 11월 종료 기준으로 배치).
+      side: "right",
+      period: "2026.08–11 (잠정)",
+      title: "Project Zero to One",
+      subtitle: "AI 동료학습(Peer Learning) 모임",
+      highlight: "발표·질문·피드백으로 함께 개선하는 동료학습",
+      cardId: "zero-to-one",
+      bullets: [
+        "[Peer Learning] 구성원이 서로 배우고 발표·질문·피드백으로 개선하는 동료학습 모임",
+        "[Activity] 8월 소모임 모집·설계 자료(design.md, AI PPT) 및 학습 키워드 공유 진행"
+      ]
+    },
+    {
+      // 2026.10월 말 수료 완료 기준 배치
+      side: "left",
+      period: "2026.06 ~ 2026.10",
+      title: "코디세이 AI 네이티브 과정 수료",
+      subtitle: "과기부 이노베이션 아카데미 교육",
+      highlight: "AI Agent · Multi-Agent Orchestration",
+      cardId: "codyssey-ai",
+      bullets: [
+        "[AI Native] AI Agent, Multi-Agent Workflow, Agent Orchestration 설계 및 실전 프로젝트 수행",
+        "[Peer Learning] 과정 내 동료학습 기반 네트워크 모임 직접 기획 및 진행"
       ]
     },
     {
@@ -381,19 +421,6 @@ const portfolio = {
       ]
     },
     {
-      // [Zero to One] 8/10 모집 공지, 8/27 design.md·AI PPT 공유, 9/02 키워드 공유 확인. 실제 시작·종료일 미확정.
-      side: "right",
-      period: "2026.08–11 (잠정)",
-      title: "Project Zero to One",
-      subtitle: "AI 동료학습(Peer Learning) 모임",
-      highlight: "발표·질문·피드백으로 함께 개선하는 동료학습",
-      cardId: "zero-to-one",
-      bullets: [
-        "[Peer Learning] 구성원이 서로 배우고 발표·질문·피드백으로 개선하는 동료학습 모임",
-        "[Activity] 8월 소모임 모집·설계 자료(design.md, AI PPT) 및 학습 키워드 공유 진행"
-      ]
-    },
-    {
       // [A] 8/23–8/25 구현·테스트 기록, 9/09 제출 준비, KST 9/11 발표자료 커밋. 전체 기간·실기기 검증 범위 후속 확인 대상.
       side: "right",
       period: "2026.08–09",
@@ -420,19 +447,6 @@ const portfolio = {
       ]
     },
     {
-      // 기존 사이트 표기 유지(입사일·전체 운영 기간은 별도 확인 대상).
-      side: "left",
-      period: "2026.07 ~ 현재",
-      title: "시공간 (서울대 인액터스 소속)",
-      subtitle: "AX 전략 파트너",
-      highlight: "AX 컨설팅 사업화 & 사내 AI 전환 리딩",
-      cardId: "sigonggan",
-      bullets: [
-        "[AX Strategy] AX(AI Transformation) 컨설팅 사업 프로세스 체계화 및 신규 비즈니스 모델(BM) 기획",
-        "[Internal AX] 사내 업무 효율화를 위한 AX 도입 전략 수립 및 전환 리딩"
-      ]
-    },
-    {
       // [D] 7/03 아이디어 회의 기준 메인 기획 초안(7/06 Drive 보존). 본선 행사일·개인 참여 기간 별도 확인 대상.
       side: "right",
       period: "2026.07",
@@ -446,18 +460,6 @@ const portfolio = {
       ]
     },
     {
-      side: "left",
-      period: "2026.06 ~ 2026.10",
-      title: "코디세이 AI 네이티브 과정 수료",
-      subtitle: "과기부 이노베이션 아카데미 교육",
-      highlight: "AI Agent · Multi-Agent Orchestration",
-      cardId: "codyssey-ai",
-      bullets: [
-        "[AI Native] AI Agent, Multi-Agent Workflow, Agent Orchestration 설계 및 실전 프로젝트 수행",
-        "[Peer Learning] 과정 내 동료학습 기반 네트워크 모임 직접 기획 및 진행"
-      ]
-    },
-    {
       // [Codybot] 6/17 최초 커밋, 6/18 프롬프트·배포 파일, 6/23 README 갱신. 전체 개발 기간 미확정.
       side: "right",
       period: "2026.06",
@@ -468,18 +470,6 @@ const portfolio = {
       bullets: [
         "[Overview] 교육 미션 안내를 분석해 개념·학습 순서·제출 체크리스트·AI 결과 검토를 돕는 Skill",
         "[Status] 설계 구조 및 활용 사례 상세 준비 중"
-      ]
-    },
-    {
-      side: "left",
-      period: "2026",
-      title: "NVIDIA DLI 5개 과정 & AICE Basic",
-      subtitle: "NVIDIA Deep Learning Institute · AI 역량 인증",
-      highlight: "LLM · RAG Agents · Diffusion · Deep Learning",
-      cardId: "nvidia-dli",
-      bullets: [
-        "[LLM & RAG] Building RAG Agents with LLMs / Prompt Engineering / Rapid App Dev with LLMs 이수",
-        "[GenAI & Cert] Generative AI with Diffusion Models / 딥러닝의 기초 이수 및 AICE Basic 취득"
       ]
     },
     {
@@ -497,16 +487,18 @@ const portfolio = {
     },
     {
       side: "left",
-      period: "2024.09",
-      title: "키르기스스탄 해외 봉사활동",
-      subtitle: "봉사활동단체 — 키르기스스탄 현지",
-      highlight: "글로벌 현장 봉사 및 프로그램 운영",
-      cardId: "community-volunteer",
+      period: "2026",
+      title: "NVIDIA DLI 5개 과정 & AICE Basic",
+      subtitle: "NVIDIA Deep Learning Institute · AI 역량 인증",
+      highlight: "LLM · RAG Agents · Diffusion · Deep Learning",
+      cardId: "nvidia-dli",
       bullets: [
-        "[Global Volunteering] 2024.09.14 ~ 09.22 키르기스스탄 현지 봉사활동 참여 및 현장 지원 수행"
+        "[LLM & RAG] Building RAG Agents with LLMs / Prompt Engineering / Rapid App Dev with LLMs 이수",
+        "[GenAI & Cert] Generative AI with Diffusion Models / 딥러닝의 기초 이수 및 AICE Basic 취득"
       ]
     },
     {
+      // 종료일(2025.01) 기준 2024.09 해외봉사보다 상위 배치
       side: "left",
       period: "2023.11 ~ 2025.01",
       title: "(주)리퍼스 청주",
@@ -516,6 +508,17 @@ const portfolio = {
       bullets: [
         "[Operations] 리퍼스 청주점 사무·영업 실무 수행 및 일일 발주 입력·처리 전담",
         "[Automation] 엑셀 매크로(VBA) 자동화 프로그램 및 구글 캘린더 연동 일정·업무 관리 체계 구축"
+      ]
+    },
+    {
+      side: "left",
+      period: "2024.09",
+      title: "키르기스스탄 해외 봉사활동",
+      subtitle: "봉사활동단체 — 키르기스스탄 현지",
+      highlight: "글로벌 현장 봉사 및 프로그램 운영",
+      cardId: "community-volunteer",
+      bullets: [
+        "[Global Volunteering] 2024.09.14 ~ 09.22 키르기스스탄 현지 봉사활동 참여 및 현장 지원 수행"
       ]
     },
     {
