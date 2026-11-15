@@ -12,6 +12,13 @@ const artwork = {
   google: '<span class="art-overline">OPERATIONS & WORKFLOW SYSTEM</span><span class="google-name">Repers</span><span class="google-note">EXCEL VBA & CALENDAR AUTOMATION.</span><span class="google-shapes"><i></i><i></i><i></i><i></i></span>',
   product: '<span class="art-corner">01 / AX WORKFLOW PIPELINE</span><span class="product-window"><span class="window-bar">•••</span><strong>AI Agent.<br>n8n Automation.</strong><span class="window-content"><i></i><i></i><i></i></span></span><span class="product-sticker">✳</span>',
   experiment: '<span class="art-corner">02 / AI EDUCATION</span><span class="experiment-note"><strong>Zero<br>to One<br>with AI</strong><span></span><span></span></span><span class="experiment-star">✶</span>',
+  pikku: '<span class="art-corner">HACKATHON / AI SCHEDULE AGENT</span><span class="product-window"><span class="window-bar">•••</span><strong>PIKKU.<br>Plan &amp; Adjust.</strong><span class="window-content"><i></i><i></i><i></i></span></span><span class="product-sticker">✳</span>',
+  shopping: '<span class="art-corner">FINAL PROJECT / AI COMMERCE</span><span class="product-window"><span class="window-bar">•••</span><strong>Shopping<br>Brain.</strong><span class="window-content"><i></i><i></i><i></i></span></span><span class="product-sticker">✶</span>',
+  childcare: '<span class="art-corner">STARTUP / AI CARE MANAGER</span><span class="experiment-note"><strong>Child Care<br>AI Manager</strong><span></span><span></span></span><span class="experiment-star">✳</span>',
+  smarthome: '<span class="art-overline">SMART HOME AUTOMATION</span><span class="mck-name">자동동<br>Home AI</span><span class="mck-caption">HOME ASSISTANT RECOMMENDATION</span><span class="mck-lines"></span>',
+  ddokddok: '<span class="art-corner">CODEGATE / FAMILY CARE</span><span class="experiment-note"><strong>똑똑용돈<br>Family Care</strong><span></span><span></span></span><span class="experiment-star">✶</span>',
+  codybot: '<span class="art-overline">AGENT SKILL &amp; LEARNING TOOL</span><span class="google-name">Codybot</span><span class="google-note">MISSION ANALYSIS &amp; CHECKLIST SKILL</span><span class="google-shapes"><i></i><i></i><i></i><i></i></span>',
+  fridai: '<span class="art-overline">AI ASSISTANT &amp; WEARABLE</span><span class="mck-name">FRID.AI<br>Context AI</span><span class="mck-caption">LIFE CONTEXT &amp; WEARABLE CONCEPT</span><span class="mck-lines"></span>',
   community: '<span class="community-title">from zero,<br>to store.</span><span class="community-people"><i></i><i></i><i></i></span><span class="community-spark">✳</span>',
   mentorship: '<span class="art-corner">PEER LEARNING & GLOBAL VOLUNTEERING</span><svg class="mentorship-path" viewBox="0 0 250 220" fill="none"><path d="M39 171c-34-56 74-22 62-69s-56 7-26 18S201 92 167 48" stroke="#98b1b3" stroke-width="2" stroke-dasharray="5 5"/><path d="m151 54 17-17 12 20-14-5Z" fill="#f7f5e8" stroke="#687f80" stroke-width="1.5" stroke-linejoin="round"/><path d="m192 111 3 9 9 1-7 6 2 9-8-5-8 4 2-9-6-6 9-1Z" fill="#d9c89c"/></svg><span class="mentorship-title">growing together.<br>beyond borders.</span>'
 };
@@ -38,9 +45,17 @@ function renderCard(card) {
   button.setAttribute("aria-haspopup", "dialog");
   button.setAttribute("aria-controls", "story-dialog");
   button.setAttribute("aria-label", `Read ${card.title}: ${card.subtitle}`);
-  const art = element("span", `card-art art-${card.art}`);
+  const art = element("span", `card-art art-${card.art}${card.cover ? " has-cover" : ""}`);
   art.setAttribute("aria-hidden", "true");
-  art.innerHTML = artwork[card.art];
+  if (card.cover) {
+    const img = element("img", "card-cover-img");
+    img.src = card.cover;
+    img.alt = "";
+    img.loading = "lazy";
+    art.append(img);
+  } else {
+    art.innerHTML = artwork[card.art];
+  }
   const heading = element("span", "card-heading");
   const arrow = element("span", "card-arrow", "↗");
   arrow.setAttribute("aria-hidden", "true");
@@ -111,7 +126,7 @@ function openStory(card, trigger) {
     card.tags.forEach(t => tags.append(element("span", "", t)));
     header.append(tags);
   }
-  if (card.example) header.append(element("span", "example-label", "세부 내용 및 이미지 추가 예정 — content.js에서 언제든 업데이트 가능"));
+  if (card.example) header.append(element("span", "example-label", "상세 준비 중 — 문제·역할·결정·결과·증빙 자료는 다음 단계에서 채울 예정입니다"));
   storyContent.append(header);
 
   card.sections.forEach((raw, idx) => {

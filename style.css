@@ -113,6 +113,7 @@ h2 { font-family: var(--serif); font-weight: 600; letter-spacing: -1.5px; color:
 .work-card[hidden] { display: none; }
 .card-button { background: none; border: 0; padding: 0; width: 100%; text-align: left; display: block; }
 .card-art { display: block; position: relative; overflow: hidden; aspect-ratio: 1.42; border-radius: 10px; isolation: isolate; transition: transform .3s ease, box-shadow .3s ease; }
+.card-cover-img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
 .card-button:hover .card-art { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45); }
 .card-heading { display: flex; align-items: baseline; gap: 10px; justify-content: space-between; margin: 16px 0 6px; }
 .card-title { font-family: var(--serif); font-size: 18px; font-weight: 600; letter-spacing: -.3px; color: #f5f5f5; }
@@ -145,7 +146,14 @@ h2 { font-family: var(--serif); font-weight: 600; letter-spacing: -1.5px; color:
 .google-shapes i:nth-child(2) { background: #c68b7c; left: 66px; border-radius: 3px; }
 .google-shapes i:nth-child(3) { background: #e5d18c; top: 66px; border-radius: 3px; }
 .google-shapes i:nth-child(4) { background: #a5b798; top: 66px; left: 66px; }
-.art-product { background: #e7dce9; }
+.art-product { background: #e7dce9; color: #3d3345; }
+.art-pikku { background: #dce7f3; color: #2b3f57; }
+.art-shopping { background: #f2e1d9; color: #54382c; }
+.art-childcare { background: #efe8d5; color: #574a2c; }
+.art-smarthome { background: #1c312e; color: #e8f5f1; }
+.art-ddokddok { background: #e3ebe2; color: #384f39; }
+.art-codybot { background: #262235; color: #efeaff; }
+.art-fridai { background: #2d2438; color: #f5ecff; }
 .art-corner { position: absolute; top: 19px; left: 20px; font-size: 8px; letter-spacing: 1.2px; color: #756680; }
 .product-window { position: absolute; width: 73%; height: 69%; background: #fffcf8; left: 15%; top: 25%; border: 1px solid #b9a6bd; border-radius: 6px; box-shadow: 8px 10px 0 #cbb8d055; transform: rotate(-7deg); padding: 22px 13px 10px; }
 .window-bar { position: absolute; top: 0; left: 0; right: 0; height: 15px; border-bottom: 1px solid #ded3e1; font-size: 7px; letter-spacing: 2px; padding-left: 7px; color: #c0b1c4; }
