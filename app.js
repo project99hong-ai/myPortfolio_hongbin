@@ -2,7 +2,7 @@ const grid = document.querySelector("#work-grid");
 const dialog = document.querySelector("#story-dialog");
 const storyContent = document.querySelector("#story-content");
 const filterButtons = [...document.querySelectorAll("[data-filter]")];
-const categoryNames = { experience: "Experience", projects: "Project", leadership: "Leadership" };
+const categoryNames = { impact: "Work & Impact", projects: "Projects" };
 let storyTrigger;
 
 const artwork = {
@@ -47,16 +47,16 @@ function renderCard(card) {
   heading.append(element("span", "card-title", card.title), arrow);
   const tags = element("span", "card-tags");
   card.tags.forEach(tag => tags.append(element("span", "", tag)));
-  button.append(art, heading, element("span", "card-subtitle", card.subtitle), tags, element("span", "card-period", card.period));
+  button.append(art, heading, element("span", "card-subtitle", card.subtitle), tags);
+  if (card.period) button.append(element("span", "card-period", card.period));
   button.addEventListener("click", () => openStory(card, button));
   article.append(button);
   return article;
 }
 
 const categoryMeta = [
-  ["experience", "01", "Experience"],
-  ["projects", "02", "Projects"],
-  ["leadership", "03", "Leadership"]
+  ["impact", "01", "Work & Impact"],
+  ["projects", "02", "Projects"]
 ];
 
 function setActiveTab(filter) {
@@ -80,21 +80,89 @@ function scrollToCategory(filter) {
   }
 }
 
+function formatBullet(li, text) {
+  const bracketMatch = text.match(/^(\[[^\]]+\])\s*(.*)$/);
+  if (bracketMatch) {
+    li.append(element("strong", "story-bullet-tag", bracketMatch[1]), document.createTextNode(` ${bracketMatch[2]}`));
+    return;
+  }
+  const colonIdx = text.indexOf(" : ");
+  if (colonIdx > 0 && colonIdx < 28) {
+    li.append(element("strong", "story-bullet-key", text.slice(0, colonIdx)), document.createTextNode(` : ${text.slice(colonIdx + 3)}`));
+    return;
+  }
+  li.textContent = text;
+}
+
 function openStory(card, trigger) {
   storyTrigger = trigger;
   storyContent.replaceChildren();
+  const header = element("header", "dialog-header");
   const title = element("h2", "", card.title);
   title.id = "story-title";
-  storyContent.append(
+  const subtitleText = card.period ? `${card.subtitle} · ${card.period}` : card.subtitle;
+  header.append(
     element("p", "dialog-category", categoryNames[card.category]),
     title,
-    element("p", "dialog-subtitle", `${card.subtitle} · ${card.period}`),
-    element("p", "dialog-summary", card.summary)
+    element("p", "dialog-subtitle", subtitleText)
   );
-  if (card.example) storyContent.append(element("span", "example-label", "Writing outline — replace with your own story"));
-  card.sections.forEach(([heading, copy]) => {
+  if (Array.isArray(card.tags) && card.tags.length) {
+    const tags = element("div", "card-tags dialog-tags");
+    card.tags.forEach(t => tags.append(element("span", "", t)));
+    header.append(tags);
+  }
+  if (card.example) header.append(element("span", "example-label", "세부 내용 및 이미지 추가 예정 — content.js에서 언제든 업데이트 가능"));
+  storyContent.append(header);
+
+  card.sections.forEach((raw, idx) => {
+    const isObj = !Array.isArray(raw) && typeof raw === "object";
+    const heading = isObj ? raw.title : raw[0];
+    const body = isObj ? (raw.bullets || raw.text) : raw[1];
+    const num = String(idx + 1).padStart(2, "0");
+
     const section = element("section", "story-section");
-    section.append(element("h3", "", heading), element("p", "", copy));
+    const h3 = element("h3", "story-heading");
+    h3.append(element("span", "story-num", `${num}.`), document.createTextNode(` ${heading}`));
+    section.append(h3);
+
+    if (Array.isArray(body)) {
+      const ul = element("ul", "story-bullets");
+      body.forEach(line => {
+        const li = element("li");
+        formatBullet(li, line);
+        ul.append(li);
+      });
+      section.append(ul);
+    } else if (body) {
+      section.append(element("p", "", body));
+    }
+
+    if (isObj && raw.image) {
+      const fig = element("figure", "story-figure");
+      const img = element("img", "story-image");
+      img.src = raw.image;
+      img.alt = raw.caption || heading;
+      img.loading = "lazy";
+      fig.append(img);
+      if (raw.caption) fig.append(element("figcaption", "", raw.caption));
+      section.append(fig);
+    }
+
+    if (isObj && Array.isArray(raw.demos)) {
+      const demoGrid = element("div", "story-demo-grid");
+      raw.demos.forEach(d => {
+        const item = element("div", "story-demo-item");
+        if (d.label) item.append(element("span", "story-demo-label", d.label));
+        const img = element("img", "story-image");
+        img.src = d.src;
+        img.alt = d.label || heading;
+        img.loading = "lazy";
+        item.append(img);
+        demoGrid.append(item);
+      });
+      section.append(demoGrid);
+    }
+
     storyContent.append(section);
   });
   const href = safeLink(card.href);
@@ -216,23 +284,58 @@ const pathTimeline = document.querySelector("#path-timeline");
 const pathLineFill = document.querySelector("#path-line-fill");
 if (pathItemsRoot && Array.isArray(portfolio.timeline)) {
   portfolio.timeline.forEach(item => {
-    const row = element("article", "path-item");
-    const year = element("div", "path-year", item.year);
+    const side = item.side === "right" ? "right" : "left";
+    const row = element("article", `path-item is-${side}`);
     const node = element("div", "path-node");
     node.setAttribute("aria-hidden", "true");
     node.append(element("span", "path-dot"));
+
     const card = element("div", "path-card bento-box");
-    const meta = element("div", "path-meta");
-    meta.append(element("span", "path-badge", item.badge), element("span", "path-period", item.period));
-    const role = element("h3", "path-role", item.title);
-    const org = element("p", "path-org", item.subtitle);
-    card.append(meta, role, org);
+    const head = element("div", "path-card-head");
+    head.append(
+      element("span", "path-period", item.period),
+      element("h3", "path-role", item.title),
+      element("p", "path-org", item.subtitle)
+    );
+    if (item.highlight) {
+      head.append(element("p", "path-highlight", item.highlight));
+    }
+    card.append(head);
+
     if (Array.isArray(item.bullets) && item.bullets.length) {
       const ul = element("ul", "path-bullets");
-      item.bullets.forEach(line => ul.append(element("li", "", line)));
+      item.bullets.forEach(line => {
+        const li = element("li");
+        formatBullet(li, line);
+        ul.append(li);
+      });
       card.append(ul);
     }
-    row.append(year, node, card);
+
+    if (item.cardId) {
+      const targetCard = portfolio.cards.find(c => c.id === item.cardId);
+      if (targetCard) {
+        card.classList.add("is-clickable");
+        card.tabIndex = 0;
+        card.setAttribute("role", "button");
+        card.setAttribute("aria-label", `상세 보기: ${item.title}`);
+        card.addEventListener("click", () => openStory(targetCard, card));
+        card.addEventListener("keydown", e => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openStory(targetCard, card);
+          }
+        });
+      }
+    }
+
+    const spacer = element("div", "path-spacer");
+    spacer.setAttribute("aria-hidden", "true");
+    if (side === "left") {
+      row.append(card, node, spacer);
+    } else {
+      row.append(spacer, node, card);
+    }
     pathItemsRoot.append(row);
   });
 
