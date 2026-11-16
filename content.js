@@ -36,6 +36,7 @@ const portfolio = {
       category: "impact",
       tags: ["AX Strategy", "BM Planning", "AI Automation"],
       art: "mckinsey",
+      cover: "images/sigonggan-cover.png",
       example: false,
       summary: "AX(AI Transformation) 컨설팅 사업 프로세스를 체계화하고, 사내 AX 전환 리딩 및 AI 기반 업무 자동화 시스템을 구축하고 있습니다.",
       sections: [
