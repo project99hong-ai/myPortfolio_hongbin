@@ -3,8 +3,17 @@
 const portfolio = {
   name: "hongbin",
   intro: "위홍빈 · AX 전략 파트너 @시공간 (서울대 인액터스) — AI와 함께 더 나은 실행과 성장을 만듭니다.",
-  emoji: "🧑‍💻",
-  floatingEmojis: ["🤖", "⚡", "🚀", "💡"],
+  profile: {
+    displayName: "위홍빈",
+    englishName: "Hongbin Wee",
+    avatar: "./images/hero-avatar.png",
+    tags: [
+      { label: "AI Builder", tone: "purple" },
+      { label: "Product", tone: "blue" },
+      { label: "AX", tone: "teal" }
+    ],
+    location: "Seoul, Korea"
+  },
   techStack: [
     "Claude Code",
     "ChatGPT / Codex",

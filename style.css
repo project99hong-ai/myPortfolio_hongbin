@@ -56,18 +56,23 @@ button:focus-visible, a:focus-visible { outline: 2px solid #a3a3a3; outline-offs
 .cta-pill:active { transform: scale(0.95); }
 .cta-pill svg { width: 15px; height: 15px; }
 .hero-side { display: flex; flex-direction: column; gap: 16px; }
-.hero-emoji-stage { flex: 1; display: flex; perspective: 900px; }
-.hero-emoji-card { width: 100%; min-height: 250px; padding: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.emoji-glow { position: absolute; width: 170px; height: 170px; border-radius: 50%; background: radial-gradient(circle, rgba(99, 102, 241, 0.28) 0%, rgba(168, 85, 247, 0.18) 55%, transparent 75%); filter: blur(16px); transform: translate3d(calc(var(--mx) * -22px), calc(var(--my) * -22px), 0); pointer-events: none; }
-.main-emoji { position: relative; z-index: 2; font-size: 96px; line-height: 1; user-select: none; filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.45)); transform: translate3d(calc(var(--mx) * 24px), calc(var(--my) * 24px), 24px); transition: transform 0.15s ease-out; animation: floatEmoji 4s ease-in-out infinite; }
-.floating-badges { position: absolute; inset: 0; pointer-events: none; }
-.emoji-badge { position: absolute; width: 44px; height: 44px; border-radius: 14px; background: rgba(38, 38, 38, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.14); box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35); display: flex; align-items: center; justify-content: center; font-size: 20px; animation: floatBadge 3.6s ease-in-out infinite; }
-.badge-1 { top: 14px; left: 16px; animation-delay: 0s; transform: translate3d(calc(var(--mx) * -22px), calc(var(--my) * -18px), 0); }
-.badge-2 { top: 18px; right: 16px; animation-delay: -0.9s; transform: translate3d(calc(var(--mx) * 24px), calc(var(--my) * -16px), 0); }
-.badge-3 { bottom: 42px; left: 20px; animation-delay: -1.8s; transform: translate3d(calc(var(--mx) * -18px), calc(var(--my) * 22px), 0); }
-.badge-4 { bottom: 38px; right: 20px; animation-delay: -2.7s; transform: translate3d(calc(var(--mx) * 22px), calc(var(--my) * 18px), 0); }
-.doodle-note { position: relative; z-index: 2; margin-top: 14px; text-align: center; font-size: 12px; color: #a3a3a3; }
-.tech-stack-card { padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; }
+.hero-profile-stage { flex: 0 0 auto; display: flex; perspective: 900px; }
+.hero-profile-card { width: 100%; padding: 14px 18px 14px 16px; display: flex; align-items: center; gap: 16px; }
+.profile-glow { position: absolute; width: 220px; height: 220px; left: -12px; top: -24px; border-radius: 50%; background: radial-gradient(circle, rgba(99, 102, 241, 0.28) 0%, rgba(139, 92, 246, 0.14) 48%, transparent 74%); filter: blur(18px); transform: translate3d(calc(var(--mx) * -18px), calc(var(--my) * -18px), 0); pointer-events: none; }
+.profile-avatar-frame { position: relative; z-index: 2; width: 142px; height: 140px; flex-shrink: 0; }
+.profile-avatar-bg { position: absolute; inset: 12px 0 0 0; border-radius: 14px; background: radial-gradient(circle at 50% 44%, rgba(139, 92, 246, 0.72) 0%, rgba(79, 70, 229, 0.34) 56%, rgba(18, 18, 28, 0.9) 100%); border: 1px solid rgba(167, 139, 250, 0.2); box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35); }
+.profile-avatar-img { position: relative; z-index: 2; width: 100%; height: 100%; display: block; object-fit: contain; object-position: center bottom; border-radius: 0 0 14px 14px; user-select: none; filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.45)); }
+.profile-info { position: relative; z-index: 2; min-width: 0; display: flex; flex-direction: column; }
+.profile-name { margin: 0; font: 700 22px/1.15 var(--serif); letter-spacing: -0.5px; color: #f5f5f5; }
+.profile-handle { margin: 3px 0 0; font-size: 12.5px; color: #a3a3a3; }
+.profile-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.profile-pill { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 500; line-height: 1.25; white-space: nowrap; }
+.profile-pill[data-tone="purple"] { background: rgba(139, 92, 246, 0.22); border: 1px solid rgba(167, 139, 250, 0.5); color: #e9d5ff; }
+.profile-pill[data-tone="blue"] { background: rgba(37, 99, 235, 0.22); border: 1px solid rgba(96, 165, 250, 0.48); color: #bfdbfe; }
+.profile-pill[data-tone="teal"] { background: rgba(13, 148, 136, 0.22); border: 1px solid rgba(45, 212, 191, 0.44); color: #99f6e4; }
+.profile-location { display: inline-flex; align-items: center; gap: 5px; margin: 12px 0 0; font-size: 12px; color: #a3a3a3; }
+.profile-location svg { width: 13px; height: 13px; flex-shrink: 0; }
+.tech-stack-card { flex: 1; padding: 20px 24px; display: flex; flex-direction: column; justify-content: center; gap: 14px; }
 .bento-header h3 { margin: 0; font: 600 18px/1.3 var(--serif); color: #d4d4d4; }
 .tech-badges { display: flex; flex-wrap: wrap; gap: 8px; }
 .tech-badge { display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; border-radius: 999px; background: rgba(38, 38, 38, 0.6); border: 1px solid rgba(64, 64, 64, 0.55); color: #d4d4d4; font-size: 12px; font-weight: 500; transition: border-color 0.2s, background 0.2s, color 0.2s; }
@@ -278,15 +283,6 @@ footer .gh-dropdown::before { inset: auto 0 -10px 0; }
   15%, 45% { transform: rotate(16deg); }
   30% { transform: rotate(-10deg); }
 }
-@keyframes floatEmoji {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -10px; }
-}
-@keyframes floatBadge {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -8px; }
-}
-
 @media (max-width: 900px) {
   .section-wrap { width: calc(100% - 40px); }
   .hero-split { grid-template-columns: 1fr; }
@@ -300,8 +296,10 @@ footer .gh-dropdown::before { inset: auto 0 -10px 0; }
   .hero { padding: 18px 0 24px; }
   .hero-copy { padding: 24px; gap: 24px; }
   .hero h1 { font-size: clamp(38px, 12vw, 56px); }
-  .hero-emoji-card { min-height: 220px; }
-  .main-emoji { font-size: 80px; }
+  .hero-profile-card { padding: 14px; gap: 14px; }
+  .profile-avatar-frame { width: 114px; height: 114px; }
+  .profile-name { font-size: 19px; }
+  .profile-pill { padding: 3px 8px; font-size: 10.5px; }
   .work-section { padding-top: 24px; padding-bottom: 65px; }
   .section-heading h2 { font-size: 36px; }
   .work-toolbar { top: 76px; margin-top: 24px; gap: 10px; flex-direction: column; align-items: flex-start; }
