@@ -232,6 +232,7 @@ const portfolio = {
       category: "projects",
       tags: ["Smart Home", "Home Assistant", "AI Recommendation"],
       art: "smarthome",
+      cover: "images/jadongdong-cover.jpg",
       example: true,
       summary: "사용자의 스마트홈 기기 구성과 생활 습관을 바탕으로 자동화 시나리오를 추천하고 승인받아 적용하는 팀 프로젝트입니다.",
       sections: [
