@@ -2,7 +2,7 @@
 // Keep example: true until a card contains your own verified information.
 const portfolio = {
   name: "hongbin",
-  intro: "위홍빈 · AX 전략 파트너 @시공간 (서울대 인액터스) — AI와 함께 더 나은 실행과 성장을 만듭니다.",
+  intro: "시공간(서울대 인액터스) AX 전략·기획 | AI를 활용해 제품, 자동화, 실행을 연결하는 Builder",
   profile: {
     displayName: "위홍빈",
     englishName: "Hongbin Wee",
