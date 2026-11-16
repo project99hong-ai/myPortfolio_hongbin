@@ -59,6 +59,7 @@ const portfolio = {
       category: "impact",
       tags: ["AI Agent", "Multi-Agent Workflow", "Agent Orchestration"],
       art: "codyssey",
+      cover: "images/codyssey-cover.jpg",
       example: false,
       summary: "과학기술정보통신부 이노베이션 아카데미의 코디세이 AI 네이티브 과정을 수료하며 AI Agent 설계·멀티 에이전트 오케스트레이션과 동료학습 커뮤니티를 이끌었습니다.",
       sections: [
