@@ -198,6 +198,11 @@ document.querySelector('meta[property="og:title"]').content = document.title;
 document.querySelector(".site-header .wordmark").setAttribute("aria-label", `${portfolio.name}, home`);
 document.querySelector('meta[name="description"]').content = `${portfolio.name} — experience, projects, and leadership.`;
 document.querySelector("#intro").textContent = portfolio.intro;
+const taglineEl = document.querySelector("#hero-tagline");
+if (taglineEl) {
+  taglineEl.textContent = portfolio.tagline || "";
+  taglineEl.hidden = !portfolio.tagline;
+}
 if (portfolio.profile) {
   const { displayName, englishName, avatar, tags, location } = portfolio.profile;
   if (displayName) {

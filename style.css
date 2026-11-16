@@ -43,12 +43,13 @@ button:focus-visible, a:focus-visible { outline: 2px solid #a3a3a3; outline-offs
 .hero-top > .eyebrow { margin: 0 0 12px; }
 .hero-greeting { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 12px; font-size: 16px; font-weight: 500; color: #d4d4d4; }
 .wave-hand { display: inline-block; transform-origin: 70% 70%; animation: waveHand 2.2s ease-in-out infinite; }
-.status-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 22px; }
-.status-dot { width: 8px; height: 8px; margin-top: 7px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.8); animation: pulseDot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; flex-shrink: 0; }
-.hero-subtitle { margin: 0; font-size: 14px; line-height: 1.55; color: #a3a3a3; white-space: pre-line; }
+.status-row { display: flex; align-items: center; gap: 8px; margin-bottom: 22px; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.8); animation: pulseDot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; flex-shrink: 0; }
+.hero-subtitle { margin: 0; font-size: 14px; color: #a3a3a3; }
 .hero-lockup { position: relative; width: 100%; }
 .hero h1 { margin: 0; font: 600 clamp(44px, 5.4vw, 76px)/1.02 var(--serif); letter-spacing: -2px; color: #f5f5f5; }
 .hero h1 em { font-style: normal; color: #fff; }
+.hero-tagline { margin: 18px 0 0; font-size: clamp(15px, 1.35vw, 17px); font-weight: 500; line-height: 1.55; letter-spacing: -0.2px; color: #d4d4d4; }
 .hero-actions { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
 .cta-group { display: flex; flex-wrap: wrap; gap: 8px; }
 .cta-pill { display: inline-flex; align-items: center; gap: 7px; padding: 8px 18px; border-radius: 999px; background: rgba(38, 38, 38, 0.65); border: 1px solid rgba(82, 82, 82, 0.55); color: #d4d4d4; font-size: 13px; font-weight: 500; transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s; }
