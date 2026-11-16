@@ -140,21 +140,26 @@ const portfolio = {
       href: ""
     },
     {
-      id: "community-volunteer",
-      title: "동료학습 네트워크 & 키르기스스탄 봉사",
-      subtitle: "커뮤니티 기획 · 해외 봉사활동",
-      category: "impact",
-      tags: ["Community", "Peer Learning", "Global Volunteering"],
-      art: "mentorship",
+      // [내부 작업 메모 - Project Zero to One]
+      // 보존된 모집·Discord 자료 기준 8/10 소모임 등록·모집 공지, 8/27 본인의 design.md·AI PPT 자료 공유, 9/02 다음 키워드 자료 공유 확인.
+      // 모집일·실제 첫 모임일·마지막 활동일은 서로 다를 수 있으며 실제 운영 시작·종료일은 미확정(기존 9–11월 표기는 재검토 대상이나 8–11월로 자동 확정하지 않음).
+      // 강사 중심 완성 교육과정이 아닌 구성원 간 발표·질문·피드백 기반 동료학습 모임.
+      id: "zero-to-one",
+      title: "Project Zero to One",
+      subtitle: "발표·질문·피드백으로 함께 성장하는 AI 동료학습 모임",
+      category: "projects",
+      tags: ["Peer Learning", "Zero to One", "AI Study"],
+      art: "experiment",
+      cover: "images/zero-to-one-cover.jpg",
       example: true,
-      summary: "코디세이 과정 내 동료학습 기반 네트워크 모임을 기획·진행하고, 키르기스스탄 현지 해외 봉사활동에 참여하며 함께 성장하는 문화를 만들었습니다.",
+      summary: "구성원이 서로 배우고 발표·질문·피드백을 주고받으며 AI 활용 방식을 개선해 나간 동료학습(Peer Learning) 모임입니다.",
       sections: [
-        ["개요", "혼자만의 성장을 넘어 동료들과 지식을 나누는 학습 네트워크를 기획하고, 해외 현지 봉사활동에서 주도적으로 역할을 수행했습니다."],
-        ["주요 활동", [
-          "[동료학습 네트워크] 코디세이 AI 네이티브 과정에서 동료들이 서로의 AI 활용법과 시행착오를 나누는 모임 기획·진행",
-          "[키르기스스탄 해외 봉사] 봉사활동단체를 통해 키르기스스탄 현지 봉사활동에 참여하여 현장 지원 및 협업 수행 (기여도 100%)"
-        ]],
-        ["추가 예정", "현장 활동 사진이나 구체적인 에피소드를 추가하면 이 영역에 이미지 그리드와 함께 표시됩니다."]
+        ["개요", "강사 중심의 일방향 강의가 아니라, 참여 구성원이 각자 시도한 AI 활용법과 설계 문서(design.md, AI PPT 등), 다음 학습 키워드를 공유하고 질문·피드백으로 함께 개선하는 동료학습 모임입니다."],
+        ["확인된 활동 맥락", [
+          "[모집 및 출발 (2026.08)] 소모임 등록·모집 공지(8/10) 및 초기 운영 방향 설정",
+          "[자료 공유 및 피드백 (2026.08–09)] design.md·AI PPT 자료 공유(8/27), 후속 키워드 자료 공유(9/02) 등 동료 간 발표·토론 진행",
+          "[상세 준비 중] 실제 첫 모임일·종료일 확정 및 공개 범위가 확인된 발표 자료·회고는 다음 단계에서 반영 예정"
+        ]]
       ],
       href: ""
     },
@@ -234,30 +239,6 @@ const portfolio = {
         ["상세 준비 중", "팀 내 본인 담당 역할, 추천 파이프라인 구조, 테스트·실기기 검증 범위 및 발표 자료는 다음 단계에서 확인 후 채울 예정입니다."]
       ],
       href: "https://github.com/Astrophotographer/HA_Automation_Maker"
-    },
-    {
-      // [내부 작업 메모 - Project Zero to One]
-      // 보존된 모집·Discord 자료 기준 8/10 소모임 등록·모집 공지, 8/27 본인의 design.md·AI PPT 자료 공유, 9/02 다음 키워드 자료 공유 확인.
-      // 모집일·실제 첫 모임일·마지막 활동일은 서로 다를 수 있으며 실제 운영 시작·종료일은 미확정(기존 9–11월 표기는 재검토 대상이나 8–11월로 자동 확정하지 않음).
-      // 강사 중심 완성 교육과정이 아닌 구성원 간 발표·질문·피드백 기반 동료학습 모임.
-      id: "zero-to-one",
-      title: "Project Zero to One",
-      subtitle: "발표·질문·피드백으로 함께 성장하는 AI 동료학습 모임",
-      category: "projects",
-      tags: ["Peer Learning", "Zero to One", "AI Study"],
-      art: "experiment",
-      cover: "images/zero-to-one-cover.jpg",
-      example: true,
-      summary: "구성원이 서로 배우고 발표·질문·피드백을 주고받으며 AI 활용 방식을 개선해 나간 동료학습(Peer Learning) 모임입니다.",
-      sections: [
-        ["개요", "강사 중심의 일방향 강의가 아니라, 참여 구성원이 각자 시도한 AI 활용법과 설계 문서(design.md, AI PPT 등), 다음 학습 키워드를 공유하고 질문·피드백으로 함께 개선하는 동료학습 모임입니다."],
-        ["확인된 활동 맥락", [
-          "[모집 및 출발 (2026.08)] 소모임 등록·모집 공지(8/10) 및 초기 운영 방향 설정",
-          "[자료 공유 및 피드백 (2026.08–09)] design.md·AI PPT 자료 공유(8/27), 후속 키워드 자료 공유(9/02) 등 동료 간 발표·토론 진행",
-          "[상세 준비 중] 실제 첫 모임일·종료일 확정 및 공개 범위가 확인된 발표 자료·회고는 다음 단계에서 반영 예정"
-        ]]
-      ],
-      href: ""
     },
     {
       // [내부 작업 메모 - 시공간·사내 AX 자동화 및 회계봇]
@@ -360,19 +341,6 @@ const portfolio = {
       ]
     },
     {
-      // [P] 10/30–11/01 기획·개발·제출 준비 인계, KST 10/31–11/01 main 커밋 기록. 실제 착수·종료일 및 제출 여부는 별도 확인 대상.
-      side: "right",
-      period: "2026.10–11",
-      title: "코디세이 AI 해커톤 · PIKKU",
-      subtitle: "AI 일정 비서 팀 프로젝트",
-      highlight: "계획·실행·재조정을 돕는 AI 일정 비서 (상세 준비 중)",
-      cardId: "pikku",
-      bullets: [
-        "[Overview] 계획·실행·재조정을 돕는 AI 일정 비서 팀 프로젝트",
-        "[Status] 상세 역할·구현 범위·결과 정리 준비 중"
-      ]
-    },
-    {
       // [Zero to One] 8/10 모집 공지, 8/27 design.md·AI PPT 공유, 9/02 키워드 공유 확인. 실제 시작·종료일 미확정(잠정 11월 종료 기준으로 배치).
       side: "right",
       period: "2026.08–11 (잠정)",
@@ -383,6 +351,19 @@ const portfolio = {
       bullets: [
         "[Peer Learning] 구성원이 서로 배우고 발표·질문·피드백으로 개선하는 동료학습 모임",
         "[Activity] 8월 소모임 모집·설계 자료(design.md, AI PPT) 및 학습 키워드 공유 진행"
+      ]
+    },
+    {
+      // [P] 10/30–11/01 기획·개발·제출 준비 인계, KST 10/31–11/01 main 커밋 기록. 실제 착수·종료일 및 제출 여부는 별도 확인 대상.
+      side: "right",
+      period: "2026.10–11",
+      title: "코디세이 AI 해커톤 · PIKKU",
+      subtitle: "AI 일정 비서 팀 프로젝트",
+      highlight: "계획·실행·재조정을 돕는 AI 일정 비서 (상세 준비 중)",
+      cardId: "pikku",
+      bullets: [
+        "[Overview] 계획·실행·재조정을 돕는 AI 일정 비서 팀 프로젝트",
+        "[Status] 상세 역할·구현 범위·결과 정리 준비 중"
       ]
     },
     {
@@ -520,7 +501,6 @@ const portfolio = {
       title: "키르기스스탄 해외 봉사활동",
       subtitle: "봉사활동단체 — 키르기스스탄 현지",
       highlight: "글로벌 현장 봉사 및 프로그램 운영",
-      cardId: "community-volunteer",
       bullets: [
         "[Global Volunteering] 2024.09.14 ~ 09.22 키르기스스탄 현지 봉사활동 참여 및 현장 지원 수행"
       ]
