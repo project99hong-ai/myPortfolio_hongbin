@@ -243,6 +243,7 @@ const portfolio = {
       category: "projects",
       tags: ["Peer Learning", "Zero to One", "AI Study"],
       art: "experiment",
+      cover: "images/zero-to-one-cover.jpg",
       example: true,
       summary: "구성원이 서로 배우고 발표·질문·피드백을 주고받으며 AI 활용 방식을 개선해 나간 동료학습(Peer Learning) 모임입니다.",
       sections: [
@@ -545,13 +546,12 @@ const portfolio = {
     },
     {
       side: "left",
-      period: "2013 ~ 2016",
+      period: "2016",
       title: "학력",
-      subtitle: "한남대학교 · 대전명석고등학교",
-      highlight: "한남대 / 대전명석고",
+      subtitle: "한남대학교",
+      highlight: "한남대학교",
       bullets: [
-        "[University] 한남대학교 중퇴 (2016)",
-        "[High School] 대전명석고등학교 졸업 (2013 ~ 2015)"
+        "[University] 한남대학교 중퇴 (2016)"
       ]
     }
   ]
