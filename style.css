@@ -39,17 +39,19 @@ button:focus-visible, a:focus-visible { outline: 2px solid #a3a3a3; outline-offs
 .eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 2px; line-height: 1.7; text-transform: uppercase; color: var(--muted); }
 .hero { --mx: 0; --my: 0; position: relative; padding: 28px 0 30px; }
 .hero-split { display: grid; grid-template-columns: 1.35fr 0.85fr; align-items: stretch; gap: 16px; text-align: left; animation: heroSlideDown 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
-.hero-copy { overflow: visible; z-index: 5; padding: 36px; display: flex; flex-direction: column; justify-content: space-between; gap: 32px; }
+.hero-copy { overflow: visible; z-index: 5; padding: 32px 36px; display: flex; flex-direction: column; justify-content: space-between; gap: 20px; }
 .hero-top > .eyebrow { margin: 0 0 12px; }
 .hero-greeting { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 12px; font-size: 16px; font-weight: 500; color: #d4d4d4; }
 .wave-hand { display: inline-block; transform-origin: 70% 70%; animation: waveHand 2.2s ease-in-out infinite; }
-.status-row { display: flex; align-items: center; gap: 8px; margin-bottom: 22px; }
+.status-row { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
 .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 10px rgba(34, 197, 94, 0.8); animation: pulseDot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; flex-shrink: 0; }
 .hero-subtitle { margin: 0; font-size: 14px; color: #a3a3a3; }
 .hero-lockup { position: relative; width: 100%; }
 .hero h1 { margin: 0; font: 600 clamp(44px, 5.4vw, 76px)/1.02 var(--serif); letter-spacing: -2px; color: #f5f5f5; }
 .hero h1 em { font-style: normal; color: #fff; }
-.hero-tagline { margin: 18px 0 0; font-size: clamp(15px, 1.35vw, 17px); font-weight: 500; line-height: 1.55; letter-spacing: -0.2px; color: #d4d4d4; }
+.hero-tagline { align-self: flex-end; margin: auto 0 0; padding-right: 14px; border-right: 2px solid rgba(167, 139, 250, 0.55); text-align: right; display: flex; flex-direction: column; gap: 4px; }
+.tagline-lead { font-size: clamp(14.5px, 1.3vw, 16px); font-weight: 500; line-height: 1.45; color: #b3b3b3; }
+.tagline-focus { font: 600 clamp(19px, 1.85vw, 22px)/1.2 var(--serif); letter-spacing: -0.4px; color: #f5f5f5; }
 .hero-actions { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
 .cta-group { display: flex; flex-wrap: wrap; gap: 8px; }
 .cta-pill { display: inline-flex; align-items: center; gap: 7px; padding: 8px 18px; border-radius: 999px; background: rgba(38, 38, 38, 0.65); border: 1px solid rgba(82, 82, 82, 0.55); color: #d4d4d4; font-size: 13px; font-weight: 500; transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s; }
@@ -297,6 +299,8 @@ footer .gh-dropdown::before { inset: auto 0 -10px 0; }
   .hero { padding: 18px 0 24px; }
   .hero-copy { padding: 24px; gap: 24px; }
   .hero h1 { font-size: clamp(38px, 12vw, 56px); }
+  .tagline-lead { font-size: 13.5px; }
+  .tagline-focus { font-size: 17px; }
   .hero-profile-card { padding: 14px; gap: 14px; }
   .profile-avatar-frame { width: 114px; height: 114px; }
   .profile-name { font-size: 19px; }

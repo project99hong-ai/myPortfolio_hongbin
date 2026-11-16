@@ -200,8 +200,11 @@ document.querySelector('meta[name="description"]').content = `${portfolio.name} 
 document.querySelector("#intro").textContent = portfolio.intro;
 const taglineEl = document.querySelector("#hero-tagline");
 if (taglineEl) {
-  taglineEl.textContent = portfolio.tagline || "";
-  taglineEl.hidden = !portfolio.tagline;
+  const lines = (portfolio.tagline || "").split("\n").filter(Boolean);
+  taglineEl.hidden = lines.length === 0;
+  taglineEl.replaceChildren(...lines.map((line, i) =>
+    element("span", i === lines.length - 1 && lines.length > 1 ? "tagline-focus" : "tagline-lead", line)
+  ));
 }
 if (portfolio.profile) {
   const { displayName, englishName, avatar, tags, location } = portfolio.profile;
