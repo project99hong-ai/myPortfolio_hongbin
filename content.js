@@ -166,6 +166,7 @@ const portfolio = {
       category: "projects",
       tags: ["AI Hackathon", "Schedule Agent", "Team Project"],
       art: "pikku",
+      cover: "images/pikku-cover.jpg",
       example: true,
       summary: "계획 수립부터 실행, 일정 재조정까지의 흐름을 돕는 AI 일정 비서 팀 프로젝트입니다.",
       sections: [
