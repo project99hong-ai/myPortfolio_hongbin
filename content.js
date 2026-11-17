@@ -28,7 +28,6 @@ const portfolio = {
     "Canva",
     "Excel & Google Sheets",
     "PowerPoint",
-    "AICE Basic",
     "NVIDIA DLI (LLM · RAG · Diffusion)"
   ],
   email: "redbin_up@icloud.com",
@@ -223,22 +222,28 @@ const portfolio = {
     },
     {
       id: "nvidia-dli",
-      title: "NVIDIA DLI 5개 과정 이수 & AICE Basic",
-      subtitle: "NVIDIA Deep Learning Institute · AI 역량 인증",
+      title: "[KSTA] NIPA-NVIDIA GPU 가속 기반 AI Agent 엔지니어 과정",
+      subtitle: "수도권 ICT이노베이션스퀘어 · 과기부 / NIPA / NVIDIA",
       category: "impact",
-      tags: ["NVIDIA DLI", "RAG Agents", "Prompt Engineering", "Diffusion", "AICE"],
+      tags: ["NIPA · KSTA", "NVIDIA DLI", "AI Agent", "RAG / LLM"],
       art: "nvidia",
+      cover: "images/nvidia-cover.jpg",
       example: false,
-      summary: "NVIDIA Deep Learning Institute(DLI)의 생성형 AI·LLM·RAG·딥러닝 5개 교육 과정을 이수하고 AICE Basic 자격을 취득했습니다.",
+      summary: "과학기술정보통신부·정보통신산업진흥원(NIPA) 주관 수도권 ICT이노베이션스퀘어에서 NIPA-NVIDIA GPU 가속 기반 AI Agent 엔지니어 과정(2단계)을 이수하고 NVIDIA DLI 5개 과정을 함께 수료했습니다.",
       sections: [
-        ["개요", "LLM 애플리케이션 개발, RAG 에이전트 구축, 프롬프트 엔지니어링, 확산 모델(Diffusion) 및 딥러닝 기초까지 실무 AI 엔지니어링의 핵심 역량을 공인 교육·자격으로 검증받았습니다."],
-        ["이수 과정 및 자격 목록", [
+        ["개요", "과학기술정보통신부·정보통신산업진흥원(NIPA) 주관 수도권 ICT이노베이션스퀘어, NIPA-NVIDIA GPU 가속 기반 AI Agent 엔지니어 GPU 가속 환경 기반의 딥러닝·LLM·RAG 에이전트·생성형 AI 엔지니어링 교육 과정"],
+        ["과정 및 수료 인증 (수료증 기준)", [
+          "[과정명] NIPA-NVIDIA GPU 가속 기반 AI Agent 엔지니어 과정(2단계)",
+          "[주관 · 발급] 과학기술정보통신부 · 정보통신산업진흥원(NIPA) · 수도권 ICT이노베이션스퀘어",
+          "[교육 기간] 2026.08.03 ~ 2026.08.25",
+          "[수료증 번호] 제2026-BT-02-0151호 (2026년 8월 25일 발급)"
+        ]],
+        ["NVIDIA DLI 세부 이수 과정 (5개 과정)", [
           "[RAG Agents] NVIDIA DLI : Building RAG Agents with LLMs",
           "[Prompt Engineering] NVIDIA DLI : Building LLM Applications With Prompt Engineering",
           "[LLM App Dev] NVIDIA DLI : Rapid Application Development with Large Language Models (LLMs)",
           "[Diffusion Models] NVIDIA DLI : Generative AI with Diffusion Models",
-          "[Deep Learning] NVIDIA DLI : 딥러닝의 기초 (Fundamentals of Deep Learning)",
-          "[Certification] AICE Basic (AI Certificate for Everyone) 취득"
+          "[Deep Learning] NVIDIA DLI : 딥러닝의 기초 (Fundamentals of Deep Learning)"
         ]]
       ],
       href: ""
@@ -731,6 +736,19 @@ const portfolio = {
       ]
     },
     {
+      // [KSTA / NIPA] 수료증 제2026-BT-02-0151호 기준 교육기간 2026.08.03 ~ 2026.08.25 — 8/25 종료일 기준 배치
+      side: "left",
+      period: "2026.08.03 ~ 2026.08.25",
+      title: "[KSTA] NIPA-NVIDIA GPU 가속 기반 AI Agent 엔지니어 과정",
+      subtitle: "수도권 ICT이노베이션스퀘어 · 정보통신산업진흥원(NIPA)",
+      highlight: "NIPA 2단계 수료 · NVIDIA DLI 5개 과정 (LLM · RAG · Diffusion)",
+      cardId: "nvidia-dli",
+      bullets: [
+        "[Certification] NIPA-NVIDIA GPU 가속 기반 AI Agent 엔지니어 과정(2단계) 이수 (2026.08.25 수료)",
+        "[NVIDIA DLI] RAG Agents · Prompt Engineering · LLM App Dev · Diffusion Models · 딥러닝의 기초 5개 과정 수료"
+      ]
+    },
+    {
       // [회계봇·AX 자동화] 8/02 핵심 API, 8/03 Slack·Agent 설계·검증, 8/10 대시보드 준비, 8/13 로컬·격리 DB 검증 기록.
       side: "right",
       period: "2026.08",
@@ -780,18 +798,6 @@ const portfolio = {
       bullets: [
         "[Overview] 흩어진 생활 정보와 사용자의 현재 맥락을 연결하는 AI 비서·웨어러블 구상",
         "[Status] 기획 배경 및 서비스 시나리오 상세 준비 중"
-      ]
-    },
-    {
-      side: "left",
-      period: "2026",
-      title: "NVIDIA DLI 5개 과정 & AICE Basic",
-      subtitle: "NVIDIA Deep Learning Institute · AI 역량 인증",
-      highlight: "LLM · RAG Agents · Diffusion · Deep Learning",
-      cardId: "nvidia-dli",
-      bullets: [
-        "[LLM & RAG] Building RAG Agents with LLMs / Prompt Engineering / Rapid App Dev with LLMs 이수",
-        "[GenAI & Cert] Generative AI with Diffusion Models / 딥러닝의 기초 이수 및 AICE Basic 취득"
       ]
     },
     {
