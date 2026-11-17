@@ -52,6 +52,7 @@ function renderCard(card) {
     img.src = card.cover;
     img.alt = "";
     img.loading = "lazy";
+    if (card.coverPosition) img.style.objectPosition = card.coverPosition;
     art.append(img);
   } else {
     art.innerHTML = artwork[card.art];

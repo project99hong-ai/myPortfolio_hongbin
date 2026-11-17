@@ -45,7 +45,8 @@ const portfolio = {
       category: "impact",
       tags: ["AX Strategy", "BM Planning", "Internal AX", "Automation"],
       art: "mckinsey",
-      cover: "images/sigonggan-cover.png",
+      cover: "images/sigonggan-cover.jpg",
+      coverPosition: "50% 10%",
       example: false,
       summary: "AI 접근성 기술을 서비스·사업 기회로 연결하는 전략 기획과, 반복적인 내부 운영 업무를 구조화·자동화하는 AX 전환에 참여하고 있습니다.",
       sections: [
