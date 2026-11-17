@@ -529,6 +529,7 @@ const portfolio = {
       category: "projects",
       tags: ["AI Care Manager", "Product Design", "Tool Calling"],
       art: "childcare",
+      cover: "images/child-ai-manager-cover.jpg",
       example: true,
       summary: "학원 현장 업무 관찰과 학부모의 반복 질문에서 출발해 자녀 돌봄·일정·소통을 돕는 AI 매니저를 구상·개발하는 프로젝트입니다.",
       sections: [
@@ -589,6 +590,7 @@ const portfolio = {
       category: "projects",
       tags: ["Codegate Hackathon", "Family Care", "PM / Planning"],
       art: "ddokddok",
+      cover: "images/ddokddok-cover.jpg",
       example: true,
       summary: "부모의 경제적 지원(용돈)과 자녀의 일상 공유·안부 확인을 자연스럽게 연결한 가족 케어 팀 프로젝트입니다.",
       sections: [
