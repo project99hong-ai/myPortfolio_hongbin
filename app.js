@@ -109,10 +109,286 @@ function formatBullet(li, text) {
   li.textContent = text;
 }
 
-function openStory(card, trigger) {
+function appendBullets(parent, lines) {
+  if (!Array.isArray(lines) || !lines.length) return;
+  const ul = element("ul", "story-bullets");
+  lines.forEach(line => {
+    const li = element("li");
+    formatBullet(li, line);
+    ul.append(li);
+  });
+  parent.append(ul);
+}
+
+function appendMedia(parent, raw, altFallback) {
+  if (!raw || typeof raw !== "object") return;
+  if (raw.image) {
+    const fig = element("figure", "story-figure");
+    const img = element("img", "story-image");
+    img.src = raw.image;
+    img.alt = raw.caption || altFallback;
+    img.loading = "lazy";
+    fig.append(img);
+    if (raw.caption) fig.append(element("figcaption", "", raw.caption));
+    parent.append(fig);
+  }
+  const items = Array.isArray(raw.demos) && raw.demos.length ? raw.demos
+    : Array.isArray(raw.media) && raw.media.length ? raw.media : null;
+  if (!items) return;
+  const grid = element("div", items.length === 1 ? "story-media-single" : "story-demo-grid");
+  items.forEach(d => {
+    if (!d?.src) return;
+    const item = element("div", "story-demo-item");
+    if (d.label) item.append(element("span", "story-demo-label", d.label));
+    const img = element("img", "story-image");
+    img.src = d.src;
+    img.alt = d.caption || d.label || altFallback;
+    img.loading = "lazy";
+    item.append(img);
+    if (d.caption) item.append(element("span", "story-demo-caption", d.caption));
+    grid.append(item);
+  });
+  if (grid.childElementCount) parent.append(grid);
+}
+
+function makeCardJumpButton(cardId, label, backCard, className = "case-rel-btn") {
+  const target = portfolio.cards.find(c => c.id === cardId);
+  if (!target) return null;
+  const btn = element("button", className, label || `${target.title} →`);
+  btn.type = "button";
+  btn.addEventListener("click", () => openStory(target, storyTrigger, backCard));
+  return btn;
+}
+
+const caseBlockRenderers = {
+  comparison(section, block) {
+    const grid = element("div", "case-grid-2");
+    (block.columns || []).forEach(col => {
+      const box = element("article", "case-card");
+      if (col.tag) box.append(element("span", "case-card-tag", col.tag));
+      if (col.title) box.append(element("h4", "case-card-title", col.title));
+      if (col.body) box.append(element("p", "case-card-body", col.body));
+      appendBullets(box, col.bullets);
+      grid.append(box);
+    });
+    section.append(grid);
+    if (block.callout) {
+      const callout = element("blockquote", "case-callout", block.callout);
+      section.append(callout);
+    }
+  },
+  chapters(section, block, card) {
+    const list = element("div", "case-chapters");
+    (block.chapters || []).forEach(ch => {
+      const item = element("article", "case-chapter");
+      const top = element("div", "case-chapter-top");
+      const titleGroup = element("div");
+      const meta = element("div", "case-chapter-meta");
+      if (ch.num) meta.append(element("span", "case-chapter-num", ch.num));
+      if (ch.eyebrow) meta.append(element("span", "case-chapter-eyebrow", ch.eyebrow));
+      titleGroup.append(meta, element("h4", "case-chapter-title", ch.title));
+      top.append(titleGroup);
+      if (ch.badge) top.append(element("span", "case-status-pill", ch.badge));
+      item.append(top);
+      appendBullets(item, ch.bullets);
+      if (Array.isArray(ch.subCards) && ch.subCards.length) {
+        const subGrid = element("div", "case-grid-2 case-subcards");
+        ch.subCards.forEach(sc => {
+          const box = element("div", "case-subcard");
+          if (sc.tag) box.append(element("span", "case-card-tag", sc.tag));
+          box.append(element("h5", "case-subcard-title", sc.title));
+          if (sc.desc) box.append(element("p", "case-subcard-desc", sc.desc));
+          subGrid.append(box);
+        });
+        item.append(subGrid);
+      }
+      if (ch.relatedCard?.cardId) {
+        const jump = makeCardJumpButton(ch.relatedCard.cardId, ch.relatedCard.label, card);
+        if (jump) item.append(jump);
+      }
+      appendMedia(item, ch, ch.title);
+      list.append(item);
+    });
+    section.append(list);
+  },
+  pillars(section, block) {
+    const grid = element("div", block.emphasis ? "case-pillars is-emphasized" : "case-pillars");
+    (block.pillars || []).forEach(p => {
+      const box = element("article", "case-pillar");
+      if (p.num) box.append(element("span", "case-pillar-num", p.num));
+      box.append(element("h4", "case-pillar-title", p.title));
+      if (p.summary) box.append(element("p", "case-pillar-summary", p.summary));
+      appendBullets(box, p.bullets);
+      grid.append(box);
+    });
+    section.append(grid);
+  },
+  steps(section, block) {
+    if (block.intro) section.append(element("p", "case-section-intro", block.intro));
+    const steps = block.steps || [];
+    const nav = element("div", "case-steps-nav");
+    nav.setAttribute("role", "tablist");
+    const grid = element("div", "case-steps-grid");
+    const tabs = [];
+    const cards = [];
+    const activate = idx => {
+      tabs.forEach((t, i) => {
+        const active = i === idx;
+        t.classList.toggle("is-active", active);
+        t.setAttribute("aria-selected", String(active));
+      });
+      cards.forEach((c, i) => c.classList.toggle("is-active", i === idx));
+    };
+    steps.forEach((step, idx) => {
+      const tab = element("button", "case-step-tab");
+      tab.type = "button";
+      tab.setAttribute("role", "tab");
+      tab.append(element("span", "case-step-num", step.num), document.createTextNode(` ${step.code || step.title}`));
+      tab.addEventListener("click", () => activate(idx));
+      tabs.push(tab);
+      nav.append(tab);
+
+      const card = element("article", "case-step-card");
+      const head = element("div", "case-step-card-head");
+      head.append(element("span", "case-step-num", step.num));
+      if (step.code) head.append(element("span", "case-step-code", step.code));
+      card.append(head, element("h4", "case-step-title", step.title), element("p", "case-step-desc", step.desc));
+      card.addEventListener("click", () => activate(idx));
+      cards.push(card);
+      grid.append(card);
+    });
+    activate(0);
+    section.append(nav, grid);
+  },
+  metrics(section, block) {
+    const grid = element("div", "case-stats");
+    (block.stats || []).forEach(s => {
+      const box = element("div", "case-stat");
+      box.append(
+        element("strong", "case-stat-value", s.value),
+        element("span", "case-stat-label", s.label)
+      );
+      if (s.caption) box.append(element("p", "case-stat-caption", s.caption));
+      grid.append(box);
+    });
+    section.append(grid);
+    if (block.note) section.append(element("p", "case-stat-note", block.note));
+  },
+  outcomes(section, block) {
+    const groups = block.groups || [];
+    if (groups.length) {
+      const wrap = element("div", groups.length > 1 ? "case-grid-2" : "case-outcomes-stack");
+      groups.forEach(g => {
+        const box = element("div", "case-card");
+        if (g.label) box.append(element("h4", "case-card-title", g.label));
+        appendBullets(box, g.bullets);
+        wrap.append(box);
+      });
+      section.append(wrap);
+    }
+    if (block.takeaway) {
+      const takeaway = element("blockquote", "case-takeaway");
+      takeaway.append(element("span", "case-takeaway-label", "KEY LEARNING"), element("p", "", block.takeaway));
+      section.append(takeaway);
+    }
+  }
+};
+
+function renderCaseStudy(card, trigger, backCard) {
+  const cs = card.caseStudy;
+  const header = element("header", "dialog-header case-hero");
+  if (backCard) {
+    const backBtn = element("button", "case-back-btn", `← ${backCard.title}(으)로 돌아가기`);
+    backBtn.type = "button";
+    backBtn.addEventListener("click", () => openStory(backCard, trigger));
+    header.append(backBtn);
+  }
+  const title = element("h2", "", card.title);
+  title.id = "story-title";
+  header.append(
+    element("p", "dialog-category", cs.categoryLabel || categoryNames[card.category]),
+    title,
+    element("p", "case-headline", cs.headline)
+  );
+  if (cs.intro) header.append(element("p", "case-intro", cs.intro));
+  if (Array.isArray(cs.meta) && cs.meta.length) {
+    const metaGrid = element("dl", "case-meta");
+    cs.meta.forEach(m => {
+      const cell = element("div", "case-meta-item");
+      cell.append(element("dt", "", m.label), element("dd", "", m.value));
+      metaGrid.append(cell);
+    });
+    header.append(metaGrid);
+  }
+  if (Array.isArray(card.tags) && card.tags.length) {
+    const tags = element("div", "card-tags dialog-tags");
+    card.tags.forEach(t => tags.append(element("span", "", t)));
+    header.append(tags);
+  }
+  storyContent.append(header);
+
+  const blocks = cs.blocks || [];
+  blocks.forEach((block, idx) => {
+    const num = String(idx + 1).padStart(2, "0");
+    const section = element("section", "story-section case-section");
+    const h3 = element("h3", "story-heading");
+    h3.append(element("span", "story-num", `${num}.`), document.createTextNode(` ${block.title}`));
+    section.append(h3);
+    caseBlockRenderers[block.type]?.(section, block, card);
+    appendMedia(section, block, block.title);
+    storyContent.append(section);
+  });
+
+  const validLinks = [...(cs.relatedLinks || [])];
+  const cardHref = safeLink(card.href);
+  if (cardHref) validLinks.unshift({ label: "View the work ↗", url: cardHref });
+  const relatedCards = (cs.relatedCards || [])
+    .map(rc => makeCardJumpButton(rc.cardId, rc.label, card, "case-rel-btn is-card"))
+    .filter(Boolean);
+  const hasGallery = Array.isArray(cs.media) && cs.media.some(m => m?.src);
+  if (validLinks.length || relatedCards.length || hasGallery) {
+    const num = String(blocks.length + 1).padStart(2, "0");
+    const relSec = element("section", "story-section case-section");
+    const h3 = element("h3", "story-heading");
+    h3.append(element("span", "story-num", `${num}.`), document.createTextNode(" 관련 자료 및 연결 프로젝트"));
+    relSec.append(h3);
+    if (hasGallery) appendMedia(relSec, { media: cs.media }, card.title);
+    if (validLinks.length || relatedCards.length) {
+      const actions = element("div", "case-related-actions");
+      validLinks.forEach(item => {
+        const href = safeLink(item.url);
+        if (!href) return;
+        const a = element("a", "case-rel-btn", item.label || "관련 링크 ↗");
+        a.href = href;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        actions.append(a);
+      });
+      relatedCards.forEach(btn => actions.append(btn));
+      relSec.append(actions);
+    }
+    storyContent.append(relSec);
+  }
+}
+
+function openStory(card, trigger, backCard = null) {
   storyTrigger = trigger;
   storyContent.replaceChildren();
+  dialog.classList.toggle("is-case-study", Boolean(card.caseStudy));
+  if (card.caseStudy) {
+    renderCaseStudy(card, trigger, backCard);
+    dialog.showModal();
+    dialog.scrollTop = 0;
+    return;
+  }
+
   const header = element("header", "dialog-header");
+  if (backCard) {
+    const backBtn = element("button", "case-back-btn", `← ${backCard.title}(으)로 돌아가기`);
+    backBtn.type = "button";
+    backBtn.addEventListener("click", () => openStory(backCard, trigger));
+    header.append(backBtn);
+  }
   const title = element("h2", "", card.title);
   title.id = "story-title";
   const subtitleText = card.period ? `${card.subtitle} · ${card.period}` : card.subtitle;
@@ -140,43 +416,9 @@ function openStory(card, trigger) {
     h3.append(element("span", "story-num", `${num}.`), document.createTextNode(` ${heading}`));
     section.append(h3);
 
-    if (Array.isArray(body)) {
-      const ul = element("ul", "story-bullets");
-      body.forEach(line => {
-        const li = element("li");
-        formatBullet(li, line);
-        ul.append(li);
-      });
-      section.append(ul);
-    } else if (body) {
-      section.append(element("p", "", body));
-    }
-
-    if (isObj && raw.image) {
-      const fig = element("figure", "story-figure");
-      const img = element("img", "story-image");
-      img.src = raw.image;
-      img.alt = raw.caption || heading;
-      img.loading = "lazy";
-      fig.append(img);
-      if (raw.caption) fig.append(element("figcaption", "", raw.caption));
-      section.append(fig);
-    }
-
-    if (isObj && Array.isArray(raw.demos)) {
-      const demoGrid = element("div", "story-demo-grid");
-      raw.demos.forEach(d => {
-        const item = element("div", "story-demo-item");
-        if (d.label) item.append(element("span", "story-demo-label", d.label));
-        const img = element("img", "story-image");
-        img.src = d.src;
-        img.alt = d.label || heading;
-        img.loading = "lazy";
-        item.append(img);
-        demoGrid.append(item);
-      });
-      section.append(demoGrid);
-    }
+    if (Array.isArray(body)) appendBullets(section, body);
+    else if (body) section.append(element("p", "", body));
+    appendMedia(section, isObj ? raw : null, heading);
 
     storyContent.append(section);
   });
