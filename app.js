@@ -192,7 +192,7 @@ function renderDiagram(section, diagram) {
   });
   wrap.append(flow);
   if (Array.isArray(diagram.stores) && diagram.stores.length) {
-    const stores = element("div", "case-diagram-stores");
+    const stores = element("div", diagram.stores.length === 4 ? "case-diagram-stores is-2col" : "case-diagram-stores");
     diagram.stores.forEach(s => {
       const db = element("div", "case-db-pill");
       db.append(element("strong", "", s.name), element("span", "", s.desc));
@@ -200,21 +200,42 @@ function renderDiagram(section, diagram) {
     });
     wrap.append(stores);
   }
+  if (Array.isArray(diagram.techRows) && diagram.techRows.length) {
+    const techWrap = element("div", "case-tech-block");
+    if (diagram.techLabel) techWrap.append(element("p", "case-diagram-label", diagram.techLabel));
+    const table = element("div", "case-tech-table");
+    diagram.techRows.forEach(r => {
+      const row = element("div", "case-tech-row");
+      row.append(
+        element("span", "case-tech-group", r.group),
+        element("code", "case-tech-stack", r.stack),
+        element("span", "case-tech-role", r.role)
+      );
+      table.append(row);
+    });
+    techWrap.append(table);
+    wrap.append(techWrap);
+  }
   section.append(wrap);
+}
+
+function appendCardGrid(parent, items, gridClass = "case-grid-2") {
+  if (!Array.isArray(items) || !items.length) return;
+  const grid = element("div", gridClass);
+  items.forEach(col => {
+    const box = element("article", "case-card");
+    if (col.tag) box.append(element("span", "case-card-tag", col.tag));
+    if (col.title) box.append(element("h4", "case-card-title", col.title));
+    if (col.body) box.append(element("p", "case-card-body", col.body));
+    appendBullets(box, col.bullets);
+    grid.append(box);
+  });
+  parent.append(grid);
 }
 
 const caseBlockRenderers = {
   comparison(section, block) {
-    const grid = element("div", "case-grid-2");
-    (block.columns || []).forEach(col => {
-      const box = element("article", "case-card");
-      if (col.tag) box.append(element("span", "case-card-tag", col.tag));
-      if (col.title) box.append(element("h4", "case-card-title", col.title));
-      if (col.body) box.append(element("p", "case-card-body", col.body));
-      appendBullets(box, col.bullets);
-      grid.append(box);
-    });
-    section.append(grid);
+    appendCardGrid(section, block.columns);
     if (block.callout) {
       section.append(element("blockquote", "case-callout", block.callout));
     }
@@ -280,7 +301,8 @@ const caseBlockRenderers = {
     const steps = block.steps || [];
     const nav = element("div", "case-steps-nav");
     nav.setAttribute("role", "tablist");
-    const grid = element("div", "case-steps-grid");
+    const gridCls = steps.length === 3 ? "case-steps-grid is-3col is-flow" : "case-steps-grid";
+    const grid = element("div", gridCls);
     const tabs = [];
     const cards = [];
     const activate = idx => {
@@ -311,6 +333,8 @@ const caseBlockRenderers = {
     });
     activate(0);
     section.append(nav, grid);
+    appendCardGrid(section, block.compare, "case-grid-2 case-steps-compare");
+    if (block.callout) section.append(element("blockquote", "case-callout", block.callout));
   },
   metrics(section, block) {
     const stats = block.stats || [];
@@ -382,7 +406,7 @@ const caseBlockRenderers = {
       const box = element("div", "case-eval-block");
       if (qa.label) box.append(element("h4", "case-eval-title", qa.label));
       if (Array.isArray(qa.badges) && qa.badges.length) {
-        const strip = element("div", "case-qa-strip");
+        const strip = element("div", qa.badges.length === 4 ? "case-qa-strip is-4col" : "case-qa-strip");
         qa.badges.forEach(b => {
           const item = element("div", "case-qa-stat");
           item.append(element("strong", "", b.value), element("span", "", b.label));
@@ -396,7 +420,7 @@ const caseBlockRenderers = {
         qa.cases.forEach(c => {
           const card = element("article", "case-card");
           card.append(
-            element("span", "case-card-tag", "QA FIX"),
+            element("span", "case-card-tag", c.tag || "QA FIX"),
             element("h5", "case-card-title", c.issue),
             element("p", "case-card-body", c.fix)
           );
@@ -404,6 +428,7 @@ const caseBlockRenderers = {
         });
         box.append(grid);
       }
+      if (qa.caveat) box.append(element("p", "case-eval-caveat", qa.caveat));
       section.append(box);
     }
   },
@@ -445,7 +470,7 @@ function renderCaseStudy(card, trigger, backCard) {
   );
   if (cs.intro) header.append(element("p", "case-intro", cs.intro));
   if (Array.isArray(cs.meta) && cs.meta.length) {
-    const metaGrid = element("dl", "case-meta");
+    const metaGrid = element("dl", cs.meta.length === 6 ? "case-meta is-3col" : "case-meta");
     cs.meta.forEach(m => {
       const cell = element("div", "case-meta-item");
       cell.append(element("dt", "", m.label), element("dd", "", m.value));

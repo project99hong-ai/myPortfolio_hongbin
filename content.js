@@ -491,12 +491,336 @@ const portfolio = {
       tags: ["AI Hackathon", "Schedule Agent", "Team Project"],
       art: "pikku",
       cover: "images/pikku-cover.jpg",
-      example: true,
+      example: false,
       summary: "계획 수립부터 실행, 일정 재조정까지의 흐름을 돕는 AI 일정 비서 팀 프로젝트입니다.",
       sections: [
-        ["개요", "계획·실행·재조정을 돕는 AI 일정 비서 팀 프로젝트입니다. (활동 자료 시기: 2026.10–11)"],
-        ["상세 준비 중", "문제 정의, 본인 담당 역할, 핵심 기술 결정, 팀 결과 및 시연 자료는 다음 단계에서 검증된 자료에 맞춰 채울 예정입니다."]
+        ["개요", "계획·실행·재조정을 돕는 AI 일정 비서 팀 프로젝트입니다. (활동 자료 시기: 2026.10–11)"]
       ],
+      caseStudy: {
+        categoryLabel: "코디세이 AI 해커톤 2026 · 팀 '시계는 워치' (5인)",
+        headline: "계획을 추천하는 AI를 넘어,\n변하는 하루에 맞춰 다시 제안하다.",
+        intro: "코디세이 AI 해커톤(주제: 'AI 기반 개인화 추천 서비스')에서 5인 팀 '시계는 워치'의 팀장으로 참여해 서비스 기획, PRD, UX/UI 설계, 핵심 사용자 흐름 정의, 통합 QA 및 시연을 담당했습니다.\nPIKKU는 '무엇을 추천할까?'보다 '지금 사용자의 상황에 맞는 실행 가능한 다음 행동을 어떻게 추천할까?'에 집중해, 일정·선호·현재 상황을 분석하고 계획이 어긋났을 때 재조정과 승인 기반 조율까지 돕는 개인화 AI 일정 비서입니다.",
+        meta: [
+          { label: "유형", value: "AI 기반 개인화 추천 서비스 해커톤" },
+          { label: "기간", value: "2026.10–11 (팀 '시계는 워치' 5인)" },
+          { label: "역할", value: "Team Lead / Product Planning / UX/UI / Integration QA" },
+          { label: "핵심 기술", value: "React Native, Expo, TypeScript, Fastify, LangGraph, Tool Calling, PostgreSQL, pg-boss" },
+          { label: "주요 연동", value: "Google Calendar, Gmail, Kakao 경로·장소, ClawOps 음성, Open-Meteo" },
+          { label: "기준 모델", value: "gpt-6.1-terra (reasoning: high) · Responses Function Calling" }
+        ],
+        blocks: [
+          {
+            type: "comparison",
+            title: "Problem Definition — 일정 관리가 아니라 판단의 부담을 줄이다",
+            keyMessage: "\"일정을 기록하는 것은 쉬워졌지만, 그 일정을 실제로 실행하기 위한 판단은 여전히 사용자의 몫입니다.\"",
+            intro: "내일 중요한 발표가 있는데 오늘 피곤하고 저녁 약속까지 있다면, 빈 시간만 표시하는 캘린더로는 무엇부터 조정해야 할지 결정하기 어렵습니다. PIKKU는 준비·이동시간, 고정 약속, 미완료 작업, 피로도를 함께 해석해 왜 지금 이 행동이 적절한지 설명하는 추천을 목표로 했습니다.",
+            columns: [
+              {
+                tag: "EXISTING TOOLS",
+                title: "기존 캘린더·알림 중심 서비스",
+                body: "일정을 기록하고 정해진 시각에 알리는 데 집중해, 실제 실행 전후에 필요한 상황 판단 부담을 사용자에게 남깁니다.",
+                bullets: [
+                  "약속 전 준비·이동·도착 여유를 개인 기준으로 역산하지 않아 출발 시각을 매번 직접 계산",
+                  "지연·피로가 생겨도 후속 일정 영향 범위를 따지지 못해 불필요한 전체 수정 또는 무대응 발생",
+                  "공동 약속을 옮겨야 할 때 대안 탐색과 상대 조율, 응답 확인 후 반영 흐름이 분리됨"
+                ]
+              },
+              {
+                tag: "PIKKU APPROACH",
+                title: "PIKKU가 해결하려 한 세 가지 질문",
+                body: "해커톤의 'AI 기반 개인화 추천' 주제를 지금 이 사용자에게 실행 가능한 다음 행동 제안으로 해석해 세 가지 질문에 답했습니다.",
+                bullets: [
+                  "1) 같은 일정이라도 사용자별 준비시간·선호·현재 상황에 따라 다른 계획을 추천할 수 있는가?",
+                  "2) 계획이 지연되거나 미완료되었을 때 영향 범위를 따져 필요한 부분만 다시 추천할 수 있는가?",
+                  "3) AI의 추천을 실제 일정 변경이나 타인 조율로 연결하면서 사용자 통제권을 유지할 수 있는가?"
+                ]
+              }
+            ],
+            callout: "피로·지연 같은 일시적 상황과 준비·이동 선호를 함께 읽어, '어떻게 바꿀까요?'라는 질문에 머무르지 않고 이유와 선택지가 있는 실행 대안을 제안하도록 설계했습니다."
+          },
+          {
+            type: "steps",
+            title: "Personalized Experience — 개인화 추천과 Plan → Act → Recover",
+            keyMessage: "\"같은 일정이라도, 사용자의 맥락이 다르면 추천도 달라져야 한다.\"",
+            intro: "PIKKU는 ① 일정 데이터(고정 약속·유동 작업·기한·반복 루틴), ② 명시적 사용자 선호(준비시간·선호 시간대·이동수단), ③ 사용자가 전달한 일시적 상황(피로·지연·미완료), ④ 필요한 외부 조회 정보(캘린더·장소·이동시간)를 결합해 추천합니다. 입력되지 않은 정보를 임의로 추정하거나 행동 패턴을 자동 학습한 것처럼 다루지 않습니다.",
+            steps: [
+              {
+                num: "01",
+                code: "PLAN · 계획",
+                title: "맥락 기반 시간·대안 추천",
+                desc: "고정 일정, 유동 작업, 명시적 선호와 필요한 외부 정보를 조회해 실행 가능한 시간대와 이유를 제안합니다. 사용자가 선택하기 전에는 기존 일정을 변경하지 않습니다."
+              },
+              {
+                num: "02",
+                code: "ACT · 실행",
+                title: "준비·출발 안내와 상태 기록",
+                desc: "서버 계산 로직으로 역산한 준비·출발 시각과 다음 행동을 안내하고, 사용자가 수행·참석 여부를 직접 체크인하거나 직전 상태를 한 단계 취소할 수 있습니다."
+              },
+              {
+                num: "03",
+                code: "RECOVER · 재조정",
+                title: "영향 범위 기반 부분 재추천",
+                desc: "지연이나 미완료가 발생하면 후속 일정과의 충돌·기한·유효성을 검증해 영향받는 일정만 대안을 제시합니다. 이후 일정에 영향이 없으면 기존 계획을 유지합니다."
+              }
+            ],
+            compare: [
+              {
+                tag: "TIME CALCULATION EXAMPLE",
+                title: "동일한 오후 3시 약속의 개인별 준비 시각 비교",
+                body: "오후 3시(15:00) 약속에 이동 30분·도착 여유 10분(출발 14:20)이 필요할 때, Memory의 준비시간에 따라 실행 계획이 달라집니다.",
+                bullets: [
+                  "준비시간 15분 사용자 → 오후 2시 5분(14:05) 준비 시작 안내",
+                  "준비시간 45분 사용자 → 오후 1시 35분(13:35) 준비 시작 안내",
+                  "시간 역산은 LLM이 임의로 추정하지 않고 서버 calculatePreparationTimes 계산 로직이 결정적으로 산출"
+                ]
+              },
+              {
+                tag: "USER SCENARIO",
+                title: "시나리오: \"내일 발표인데 오늘 피곤하고 저녁 약속이 있어\"",
+                body: "고정 약속과 유동 작업, 일시적 피로가 겹친 하루에서 PIKKU의 추천·승인·조율 흐름입니다.",
+                bullets: [
+                  "맥락 조회: 발표·저녁 고정 약속과 저장된 선호를 조회하고, 피로는 일시적 상황으로 구분해 반영",
+                  "대안 추천: 가능한 빈 시간과 제약을 검증해 개인 준비 작업 이동 또는 저녁 약속 조정안과 근거를 제안",
+                  "승인 경계: 수락한 개인 일정 변경만 반영하며, 공동 약속은 별도 연락 승인·응답 확인·재검증 뒤 적용"
+                ]
+              }
+            ]
+          },
+          {
+            type: "chapters",
+            title: "Architecture & Technical Decisions — 개인화 추천의 기술 연결",
+            keyMessage: "\"LLM은 맥락을 해석해 대안을 만들고, 서버 Schedule Engine이 계산·충돌·승인 경계를 검증합니다.\"",
+            intro: "단일 백엔드(Node.js · Fastify)에서 LangGraph JS 기반 단일 S LLM('gpt-6.1-terra' / high)을 실행하면서, AI의 읽기·계산 도구 호출과 실제 DB 변경·외부 발신 권한을 분리해 개인화 추천과 서비스 안전성을 함께 확보했습니다.",
+            chapters: [
+              {
+                num: "DECISION 01",
+                eyebrow: "ORCHESTRATION",
+                title: "LangGraph + Tool Calling 기반 선택적 맥락 조회",
+                badge: "READ-ONLY TOOLS",
+                bullets: [
+                  "LangGraph JS StateGraph('reason' ↔ 'read_tool' → 'validate')로 대화 맥락에 따라 일정·Memory·외부 정보·계산 Tool만 선택 호출하도록 구성",
+                  "모든 입력에 고정 답변이나 전체 재계획을 강제하지 않고, 단순 감사에는 바로 답하며 부족한 정보만 질문('question')하거나 초안·제안('proposal') 생성",
+                  "모델에는 읽기·시간 계산 Tool만 노출하고 일정 쓰기·연락 발신 권한은 배제해 응답 추론과 상태 변경 책임을 분리"
+                ]
+              },
+              {
+                num: "DECISION 02",
+                eyebrow: "PERSONALIZATION",
+                title: "Context & Memory 기반 장기 선호·일시 상황 구분",
+                badge: "DATA & CONTEXT",
+                bullets: [
+                  "PostgreSQL에 확정 일정, 명시적 선호('preference'), 만료 시각('validUntil')을 둔 일시적 상황('situation')을 출처·버전과 함께 분리 저장",
+                  "'오늘 피곤함' 같은 일시적 컨디션을 영구 선호로 덮어쓰지 않고, 없는 정보는 임의로 만들어내지 않도록 설계",
+                  "PlanningAgentRunner가 활성 키 인덱스(최대 30키)와 bounded 조회(최대 20건·16KiB)로 지금 판단에 필요한 개인화 근거만 제공"
+                ]
+              },
+              {
+                num: "DECISION 03",
+                eyebrow: "CORE ARCHITECTURE",
+                title: "LLM 판단과 Schedule Engine 검증의 완전한 분리",
+                highlight: true,
+                badge: "KEY DECISION",
+                bullets: [
+                  "LLM은 사용자 의도와 맥락을 해석해 변경안을 제안하고, 서버 Schedule Engine(assessChanges · calculatePreparationTimes · validateScheduleProposal)이 빈 시간·역산·충돌·고정/완료 일정 보호를 코드로 검증",
+                  "AI 제안은 확정 일정과 분리된 'pending' 상태로 저장되며, 사용자가 수락하는 시점에도 제안 버전·만료 시각·최신 scheduleRevision과 맥락 버전을 다시 검사",
+                  "AI 추천의 유연성을 유지하면서도 잘못된 시간 계산, 오래된 제안 반영, 승인 없는 일정 변경을 방지하는 핵심 안전장치로 설계"
+                ]
+              },
+              {
+                num: "DECISION 04",
+                eyebrow: "EXTERNAL EXECUTION",
+                title: "추천을 실행으로 연결하는 외부 연동 (구현 vs 검증 구분)",
+                badge: "HUMAN IN THE LOOP",
+                bullets: [
+                  "Google Calendar, Gmail, Kakao 장소/이동시간, Open-Meteo, ClawOps 음성을 사용자별 인증 경계에서 연결",
+                  "공동 약속 조정은 추천 → 대상·채널·허용 대안 별도 승인 → 연락 → 응답 검토 → 최신 상태 재검증 → 내부 일정 반영 단계로 분리",
+                  "단순 발신 성공을 상대 합의 완료로 취급하지 않고, 상대 수락과 최신 일정 정합성이 확인되기 전에는 원래 약속을 보존"
+                ],
+                subCards: [
+                  {
+                    tag: "GMAIL · CALENDAR VERIFIED",
+                    title: "이메일 회신·일정 가져오기 검수",
+                    desc: "공개 웹 QA에서 테스트 계정 기준 Gmail 실제 발송·회신 조회 → 사용자 확인 → 격리 가상 일정 반영과 시간형 Google Calendar 선택 가져오기를 확인했습니다."
+                  },
+                  {
+                    tag: "VOICE · SIMULATION BOUNDARY",
+                    title: "음성 통화 구현과 검증 구분",
+                    desc: "ClawOps 관리형 음성 1회 실제 발신·전사 저장(확인 전 불변)은 확인했으나 프롬프트·종료 보완 이후 재실통화는 모의 검증만 진행했고, VoiceML은 설정·모의 중심으로 확인했습니다."
+                  }
+                ]
+              }
+            ],
+            diagram: {
+              label: "PIKKU ARCHITECTURE FLOW · AI AGENT → SCHEDULE ENGINE → USER APPROVAL",
+              steps: [
+                {
+                  role: "APP / WEB",
+                  title: "사용자 앱 (Expo / React Native · TypeScript)",
+                  detail: "일정·선호·현재 상황을 입력하고, 추천 카드의 변경 전후 비교를 확인해 수락·거절 선택"
+                },
+                {
+                  role: "API SERVER",
+                  title: "Fastify API & 인증·요청 검증 (Zod)",
+                  detail: "회원 세션 격리, 120초 요청 제한 및 복구, 현재 scheduleRevision·contextRevision 스냅샷 캡처"
+                },
+                {
+                  role: "AI AGENT",
+                  title: "LangGraph JS Agent (gpt-6.1-terra / high)",
+                  detail: "요청 의도와 맥락을 해석해 필요한 읽기·계산 Tool만 호출하고 개인화된 대안·이유를 구성",
+                  branches: [
+                    { code: "TOOL", label: "일정·Memory·시간역산 Tool", active: true },
+                    { code: "DB", label: "PostgreSQL (일정·선호·승인)", active: true },
+                    { code: "EXT", label: "Google·Kakao·날씨·연락 API" }
+                  ]
+                },
+                {
+                  role: "ENGINE",
+                  title: "Schedule Engine 검증 (서버 결정 로직)",
+                  detail: "빈 시간·준비/이동 역산·겹침 충돌·마감·고정/완료 일정 보호를 코드로 검증해 부적합한 제안 차단",
+                  highlight: true
+                },
+                {
+                  role: "APPROVAL GATE",
+                  title: "사용자 승인 및 최신 상태 재검증",
+                  detail: "수락 요청 시 제안 ID·버전·만료 시각·최신 일정 및 맥락 버전을 다시 대조해 유효한 변경만 통과"
+                },
+                {
+                  role: "ACTION / QUEUE",
+                  title: "일정 반영 · 승인된 외부 연락 · pg-boss 예약 검토",
+                  detail: "내부 일정 DB 확정 저장, 별도 승인된 Gmail·ClawOps 실행, 사용자 설정 시각(예: 09:00/21:00) 정기 검토"
+                }
+              ],
+              stores: [
+                { name: "AI Agent", desc: "LangGraph JS · Tool Calling · 맥락 해석과 이유 구성" },
+                { name: "개인화 Memory", desc: "PostgreSQL · 선호(장기)와 상황(만료) 출처 구분" },
+                { name: "일정 검증", desc: "Schedule Engine · 버전·승인 게이트 · 충돌 방어" },
+                { name: "외부 실행", desc: "Google · Kakao · ClawOps · pg-boss · 승인 기반 실행" }
+              ],
+              techLabel: "TECH STACK BY ROLE",
+              techRows: [
+                { group: "App / Web", stack: "Expo, React Native, TypeScript", role: "일정·추천·승인 사용자 경험" },
+                { group: "Backend", stack: "Node.js, Fastify, Zod", role: "API 및 입력·실행 검증" },
+                { group: "AI Agent", stack: "LangGraph JS, Tool Calling", role: "맥락 조회·추천 경로 제어" },
+                { group: "Data & Memory", stack: "PostgreSQL", role: "일정·선호·상태 관리" },
+                { group: "Scheduling", stack: "pg-boss", role: "예약 작업 실행" },
+                { group: "External", stack: "Google Calendar, Gmail, 지도·이동정보, ClawOps", role: "외부 데이터 조회와 승인 기반 연락" },
+                { group: "Infra", stack: "Vercel, NAVER Cloud VM", role: "웹·API 실행 환경" }
+              ]
+            }
+          },
+          {
+            type: "evaluation",
+            title: "Implementation & Verification — 실제 구현과 검증",
+            keyMessage: "\"추천이 그럴듯한지를 넘어, 실제 일정과 사용자 승인 상태가 일치하는지 검증했습니다.\"",
+            intro: "README 및 구현 기록을 기준으로 각 계층의 자동화 테스트 결과와 격리 PostgreSQL 검증, 공개 QA 환경 범위 및 미검증 한계를 엄격히 구분해 확인했습니다.",
+            qa: {
+              label: "VERIFICATION RECORDS BY SCOPE (NOT SUMMED)",
+              badges: [
+                { value: "548건 통과", label: "모바일 테스트 (main 통합 시점)" },
+                { value: "44건 통과", label: "도메인 테스트 (@pikku/domain)" },
+                { value: "56건 통과", label: "API 승인·저장·Calendar 집중 테스트" },
+                { value: "2건 통과", label: "별도 임시 PostgreSQL (회원 분리·복구)" }
+              ],
+              scope: "각 테스트는 실행 시점과 검증 범위가 달라 합산한 단일 최종 지표로 표기하지 않았습니다(API 기본 실행 시 DB 미설정 5건 skip). 추가로 workspace typecheck, JS export, 격리 테스트 DB 기반 실모델·pg-boss 예약 E2E('verify-live-planning.ts --live' 8/8) 및 Vercel 웹과 NAVER Cloud VM API·PostgreSQL 공개 QA 환경 구성 기록이 있습니다.",
+              cases: [
+                {
+                  tag: "VERIFICATION 01",
+                  issue: "AI 제안 수락 전 불변 & 최신 상태 재검증",
+                  fix: "validateScheduleProposal과 decideProposal이 수락 전 제안을 'pending'으로 분리해 원 일정을 유지하고, 수락 시점에는 scheduleRevision·contextRevision·만료 시각을 재검사해 오래된 제안을 'stale_proposal' / 'expired_proposal'로 차단함을 확인했습니다."
+                },
+                {
+                  tag: "VERIFICATION 02",
+                  issue: "사용자별 준비시간 역산 & 불필요한 재계획 방지",
+                  fix: "calculatePreparationTimes가 15시 약속(이동 30분·여유 10분) 기준 준비 15분(14:05)과 45분(13:35)을 정확히 구분 산출하고, 지연이 후속 일정에 영향이 없을 때 기존 계획을 유지(no-op)하며 원 일정이 보존됨을 확인했습니다."
+                }
+              ],
+              caveat: "구현·검증 경계: ① 설치형 실기기(iOS/Android) 푸시 알림 울림, HealthKit/Health Connect 실기기 동의·조회, 수정 후 음성 재실통화 전체 흐름은 미검증이며 웹 예약 알림은 미지원입니다. ② JS export는 설치형 바이너리와 구분됩니다. ③ 매시간 자동 재계획, 행동 자동 학습, 정량적 시간 절감·만족도·추천 정확도는 완성 또는 측정 범위가 아닙니다."
+            }
+          },
+          {
+            type: "pillars",
+            title: "My Contribution — 팀장으로서의 기획과 실행",
+            emphasis: true,
+            keyMessage: "\"추상적인 개인화 추천 아이디어를 구현 가능한 사용자 경험과 개발 기준으로 구체화하다.\"",
+            intro: "Team Lead / Product & UX / PRD / Integration QA / Demo & Presentation — 각 영역 팀원들이 전문 기술(App·Server, DB·Memory, AI Prompt, External·Voice)을 공통 계약 위에서 연결할 수 있도록 제품 경험과 검증 기준을 정리했습니다.",
+            pillars: [
+              {
+                num: "01",
+                title: "서비스 방향 및 핵심 경험 정의",
+                summary: "AI 개인화 추천 주제를 실행 부담 해소 경험으로 구체화",
+                bullets: [
+                  "단순 일정 생성·알림을 넘어 Plan → Act → Recover 경험 중심으로 제품 목표 수립",
+                  "추천 이유 설명과 사용자 승인 기반 통제권을 서비스 핵심 원칙으로 정의"
+                ]
+              },
+              {
+                num: "02",
+                title: "PRD·UX/UI 및 핵심 사용자 흐름 설계",
+                summary: "복잡한 AI 상태를 사용자가 이해할 수 있는 화면 흐름으로 설계",
+                bullets: [
+                  "개인화 선호·상황 입력, 부족 정보 추가 질문, 변경 전후 제안 카드, 수락/거절·수정 흐름 설계",
+                  "공동 약속 조율 시 연락 승인·응답 대기·실패·재확인 등 예외 UX 상태 정리"
+                ]
+              },
+              {
+                num: "03",
+                title: "구현 범위와 우선순위 조율",
+                summary: "제한된 해커톤 일정 내 핵심 추천·검증·승인 E2E 정렬",
+                bullets: [
+                  "개인화 추천 → 서버 검증 → 사용자 승인으로 이어지는 핵심 경로를 우선 구현 범위로 확정",
+                  "팀원별 산출물이 공통 데이터·API 계약을 기준으로 연결되도록 기능 범위 조율"
+                ]
+              },
+              {
+                num: "04",
+                title: "통합 QA와 시연·발표 총괄",
+                summary: "정상 흐름과 예외 시나리오 검수 및 2분 시연·발표 준비",
+                bullets: [
+                  "잘못된 일정 변경, 승인 누락, 정보 부족, 외부 연동 미설정/거절 등 예외 상황 집중 QA 수행",
+                  "실제 작동 화면 중심의 2분 시연 흐름 구성 및 발표 진행 담당"
+                ]
+              }
+            ],
+            runtimeNotes: {
+              label: "팀 협업 및 역할 경계",
+              items: [
+                "LangGraph·Fastify 핵심 실행 구조, PostgreSQL·pg-boss 저장/예약, Agent 프롬프트, Google·Kakao·ClawOps 외부 연동 구현은 각 영역 팀원의 전문 기여이며 본인 단독 구현으로 표기하지 않았습니다.",
+                "본인은 팀장으로서 이 기술들이 사용자에게 일관된 개인화 추천 경험으로 이어지도록 PRD·UX 설계·범위 조율·통합 QA와 발표를 담당했습니다(팀원별 상세 역할표는 추후 발표 자료에서 제공 예정)."
+              ]
+            }
+          },
+          {
+            type: "outcomes",
+            title: "Reflection & Resources — 배운 점과 보완 방향",
+            intro: "개인화 AI 서비스를 설계하고 팀을 이끌며 얻은 엔지니어링·제품 관점의 교훈입니다.",
+            groups: [
+              {
+                label: "무엇을 배웠는가",
+                bullets: [
+                  "개인화 AI의 가치는 사용자를 많이 아는 것보다, 지금 판단에 필요한 맥락을 정확히 이해해 실행 가능한 선택을 제안하는 데 있다는 점",
+                  "사용자 데이터와 외부 API를 LLM에 넘기는 것만으로는 신뢰를 담보할 수 없으며, 실제 제약을 검증하는 서버 로직과 사용자 최종 승인 구조가 필수적이라는 점",
+                  "팀장으로서 AI·백엔드·데이터·UX·외부 연동을 하나의 서비스 목표와 검증 기준으로 연결한 협업 경험"
+                ]
+              },
+              {
+                label: "보완 및 확장 방향",
+                bullets: [
+                  "테스트 OAuth 허용 계정 제한을 벗어난 정식 Google 회원 로그인·서비스별 권한 동의 확장",
+                  "임시 터널이 아닌 고정 API 도메인·호스팅 안정화 및 설치형 실기기 알림·건강 데이터 검증",
+                  "다양한 맥락 시나리오에서 개인화 추천 품질과 응답 지연을 정량적으로 비교 평가하는 체계 보완"
+                ]
+              }
+            ],
+            takeaway: "개인화 AI의 가치는 사용자를 많이 아는 것보다, 지금 필요한 맥락을 정확히 이해해 실행 가능한 선택을 제안하는 데 있습니다."
+          }
+        ],
+        relatedTitle: "관련 자료 및 링크",
+        relatedNote: "발표 PPT 및 시연 영상은 추후 사용자가 직접 추가할 예정입니다. 웹앱 링크(Vercel)는 Welcome 화면 접속(HTTP 200)은 확인되나, Google 로그인은 테스트 OAuth 앱 허용 계정 제한이 있으며 웹 번들에 연결된 임시 Cloudflare API 터널이 비활성 상태일 경우 로그인 및 AI 추천 기능 동작이 제한될 수 있습니다.",
+        relatedLinks: [
+          { label: "GitHub 저장소 (codyssey-hackathon-bbikku) ↗", url: "https://github.com/codyssey-hackerton/codyssey-hackathon-bbikku" },
+          { label: "PIKKU 웹 프리뷰 (Vercel) ↗", url: "https://pikku-bbikku-web-preview.vercel.app/" }
+        ]
+      },
       href: "https://github.com/codyssey-hackerton/codyssey-hackathon-bbikku"
     },
     {
