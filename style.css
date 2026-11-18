@@ -348,9 +348,13 @@ footer .gh-dropdown::before { inset: auto 0 -10px 0; }
 .case-step-num { font-weight: 700; color: #a78bfa; font-size: 11px; }
 .case-steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
 .case-steps-grid.is-3col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.case-steps-grid.is-5col { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 .case-steps-grid.is-flow { gap: 22px; }
+.case-steps-grid.is-5col.is-flow { gap: 16px; }
 .case-step-card { position: relative; padding: 18px; border-radius: 14px; background: rgba(255, 255, 255, 0.025); border: 1px solid rgba(255, 255, 255, 0.1); cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+.case-steps-grid.is-5col .case-step-card { padding: 14px 12px; }
 .case-steps-grid.is-flow .case-step-card:not(:last-child)::after { content: "→"; position: absolute; right: -18px; top: 50%; transform: translateY(-50%); font-size: 14px; font-weight: 600; color: #737373; pointer-events: none; }
+.case-steps-grid.is-5col.is-flow .case-step-card:not(:last-child)::after { right: -13px; font-size: 12px; }
 .case-steps-compare { margin-top: 16px; }
 .case-step-card.is-active { background: rgba(139, 92, 246, 0.11); border-color: rgba(167, 139, 250, 0.48); }
 .case-step-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
@@ -420,9 +424,11 @@ footer .gh-dropdown::before { inset: auto 0 -10px 0; }
   .hero-split { grid-template-columns: 1fr; }
   .category-cards { gap: 18px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .footer-top h2 { font-size: 38px; }
+  .case-steps-grid.is-5col { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .case-steps-grid.is-5col.is-flow .case-step-card:not(:last-child)::after { display: none; }
 }
 @media (max-width: 760px) {
-  .case-meta.is-3col, .case-pillars, .case-pillars.is-2col, .case-stats.is-3col, .case-diagram-stores, .case-diagram-stores.is-2col, .case-qa-strip, .case-qa-strip.is-4col, .case-steps-grid.is-3col { grid-template-columns: 1fr; }
+  .case-meta.is-3col, .case-pillars, .case-pillars.is-2col, .case-stats.is-3col, .case-diagram-stores, .case-diagram-stores.is-2col, .case-qa-strip, .case-qa-strip.is-4col, .case-steps-grid.is-3col, .case-steps-grid.is-5col { grid-template-columns: 1fr; }
   .case-steps-grid.is-flow { gap: 12px; }
   .case-steps-grid.is-flow .case-step-card:not(:last-child)::after { display: none; }
 }

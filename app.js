@@ -296,12 +296,18 @@ const caseBlockRenderers = {
       appendBullets(runtime, block.runtimeNotes.items);
       section.append(runtime);
     }
+    appendCardGrid(section, block.compare, "case-grid-2 case-steps-compare");
+    if (block.callout) section.append(element("blockquote", "case-callout", block.callout));
   },
   steps(section, block) {
     const steps = block.steps || [];
     const nav = element("div", "case-steps-nav");
     nav.setAttribute("role", "tablist");
-    const gridCls = steps.length === 3 ? "case-steps-grid is-3col is-flow" : "case-steps-grid";
+    const gridCls = steps.length === 5
+      ? "case-steps-grid is-5col is-flow"
+      : steps.length === 3
+        ? "case-steps-grid is-3col is-flow"
+        : "case-steps-grid";
     const grid = element("div", gridCls);
     const tabs = [];
     const cards = [];
