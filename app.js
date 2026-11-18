@@ -161,6 +161,48 @@ function makeCardJumpButton(cardId, label, backCard, className = "case-rel-btn")
   return btn;
 }
 
+function renderDiagram(section, diagram) {
+  if (!diagram?.steps?.length) return;
+  const wrap = element("div", "case-diagram");
+  if (diagram.label) wrap.append(element("p", "case-diagram-label", diagram.label));
+  const flow = element("div", "case-diagram-flow");
+  diagram.steps.forEach((step, idx) => {
+    if (idx > 0) {
+      const arrow = element("div", "case-diagram-arrow");
+      arrow.setAttribute("aria-hidden", "true");
+      arrow.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14m0 0-5-5m5 5 5-5"/></svg>';
+      flow.append(arrow);
+    }
+    const node = element("div", `case-diagram-node${step.highlight ? " is-highlighted" : ""}`);
+    const head = element("div", "case-diagram-head");
+    if (step.role) head.append(element("span", "case-diagram-role", step.role));
+    head.append(element("strong", "case-diagram-title", step.title));
+    node.append(head);
+    if (step.detail) node.append(element("p", "case-diagram-detail", step.detail));
+    if (Array.isArray(step.branches) && step.branches.length) {
+      const branchGrid = element("div", "case-diagram-branches");
+      step.branches.forEach(b => {
+        const chip = element("span", `case-branch-chip${b.active ? " is-active" : ""}`);
+        chip.append(element("code", "", b.code), document.createTextNode(` ${b.label}`));
+        branchGrid.append(chip);
+      });
+      node.append(branchGrid);
+    }
+    flow.append(node);
+  });
+  wrap.append(flow);
+  if (Array.isArray(diagram.stores) && diagram.stores.length) {
+    const stores = element("div", "case-diagram-stores");
+    diagram.stores.forEach(s => {
+      const db = element("div", "case-db-pill");
+      db.append(element("strong", "", s.name), element("span", "", s.desc));
+      stores.append(db);
+    });
+    wrap.append(stores);
+  }
+  section.append(wrap);
+}
+
 const caseBlockRenderers = {
   comparison(section, block) {
     const grid = element("div", "case-grid-2");
@@ -174,14 +216,13 @@ const caseBlockRenderers = {
     });
     section.append(grid);
     if (block.callout) {
-      const callout = element("blockquote", "case-callout", block.callout);
-      section.append(callout);
+      section.append(element("blockquote", "case-callout", block.callout));
     }
   },
   chapters(section, block, card) {
     const list = element("div", "case-chapters");
     (block.chapters || []).forEach(ch => {
-      const item = element("article", "case-chapter");
+      const item = element("article", `case-chapter${ch.highlight ? " is-highlighted" : ""}`);
       const top = element("div", "case-chapter-top");
       const titleGroup = element("div");
       const meta = element("div", "case-chapter-meta");
@@ -211,10 +252,15 @@ const caseBlockRenderers = {
       list.append(item);
     });
     section.append(list);
+    if (block.diagram) renderDiagram(section, block.diagram);
   },
   pillars(section, block) {
-    const grid = element("div", block.emphasis ? "case-pillars is-emphasized" : "case-pillars");
-    (block.pillars || []).forEach(p => {
+    const pillars = block.pillars || [];
+    const cls = ["case-pillars"];
+    if (block.emphasis) cls.push("is-emphasized");
+    if (pillars.length === 4) cls.push("is-2col");
+    const grid = element("div", cls.join(" "));
+    pillars.forEach(p => {
       const box = element("article", "case-pillar");
       if (p.num) box.append(element("span", "case-pillar-num", p.num));
       box.append(element("h4", "case-pillar-title", p.title));
@@ -223,9 +269,14 @@ const caseBlockRenderers = {
       grid.append(box);
     });
     section.append(grid);
+    if (block.runtimeNotes?.items?.length) {
+      const runtime = element("div", "case-runtime-block");
+      if (block.runtimeNotes.label) runtime.append(element("h4", "case-runtime-title", block.runtimeNotes.label));
+      appendBullets(runtime, block.runtimeNotes.items);
+      section.append(runtime);
+    }
   },
   steps(section, block) {
-    if (block.intro) section.append(element("p", "case-section-intro", block.intro));
     const steps = block.steps || [];
     const nav = element("div", "case-steps-nav");
     nav.setAttribute("role", "tablist");
@@ -262,8 +313,9 @@ const caseBlockRenderers = {
     section.append(nav, grid);
   },
   metrics(section, block) {
-    const grid = element("div", "case-stats");
-    (block.stats || []).forEach(s => {
+    const stats = block.stats || [];
+    const grid = element("div", stats.length === 3 ? "case-stats is-3col" : "case-stats");
+    stats.forEach(s => {
       const box = element("div", "case-stat");
       box.append(
         element("strong", "case-stat-value", s.value),
@@ -273,7 +325,87 @@ const caseBlockRenderers = {
       grid.append(box);
     });
     section.append(grid);
+    if (Array.isArray(block.constraints) && block.constraints.length) {
+      const list = element("ol", "case-constraints");
+      block.constraints.forEach(c => {
+        const row = element("li", "case-constraint-row");
+        row.append(
+          element("span", "case-constraint-num", c.num),
+          (() => {
+            const copy = element("div", "case-constraint-copy");
+            copy.append(element("strong", "", c.title), element("p", "", c.desc));
+            return copy;
+          })()
+        );
+        list.append(row);
+      });
+      section.append(list);
+    }
     if (block.note) section.append(element("p", "case-stat-note", block.note));
+    if (block.callout) section.append(element("blockquote", "case-callout", block.callout));
+  },
+  evaluation(section, block) {
+    if (block.experiments) {
+      const exp = block.experiments;
+      const box = element("div", "case-eval-block");
+      if (exp.label) box.append(element("h4", "case-eval-title", exp.label));
+      if (exp.scope) box.append(element("p", "case-eval-scope", exp.scope));
+      const chart = element("div", "case-chart");
+      if (exp.metricLabel) {
+        const head = element("div", "case-chart-head");
+        head.append(element("span", "", "검색 구성"), element("span", "", `${exp.metricLabel} · MRR@5`));
+        chart.append(head);
+      }
+      (exp.rows || []).forEach(r => {
+        const row = element("div", `case-chart-row${r.top ? " is-top" : ""}`);
+        const nameWrap = element("div", "case-chart-name");
+        nameWrap.append(element("span", "", r.name));
+        if (r.dim) nameWrap.append(element("small", "", r.dim));
+        const track = element("div", "case-chart-track");
+        const fill = element("div", "case-chart-fill");
+        fill.style.width = `${Math.max(0, Math.min(100, Number(r.hit1) || 0))}%`;
+        track.append(fill);
+        const val = element("div", "case-chart-val");
+        val.append(
+          element("strong", "", `${r.hit1}%`),
+          element("small", "", `${r.count}${r.mrr ? ` · MRR ${r.mrr}` : ""}`)
+        );
+        row.append(nameWrap, track, val);
+        chart.append(row);
+      });
+      box.append(chart);
+      if (exp.caveat) box.append(element("p", "case-eval-caveat", exp.caveat));
+      section.append(box);
+    }
+    if (block.qa) {
+      const qa = block.qa;
+      const box = element("div", "case-eval-block");
+      if (qa.label) box.append(element("h4", "case-eval-title", qa.label));
+      if (Array.isArray(qa.badges) && qa.badges.length) {
+        const strip = element("div", "case-qa-strip");
+        qa.badges.forEach(b => {
+          const item = element("div", "case-qa-stat");
+          item.append(element("strong", "", b.value), element("span", "", b.label));
+          strip.append(item);
+        });
+        box.append(strip);
+      }
+      if (qa.scope) box.append(element("p", "case-eval-scope", qa.scope));
+      if (Array.isArray(qa.cases) && qa.cases.length) {
+        const grid = element("div", "case-grid-2");
+        qa.cases.forEach(c => {
+          const card = element("article", "case-card");
+          card.append(
+            element("span", "case-card-tag", "QA FIX"),
+            element("h5", "case-card-title", c.issue),
+            element("p", "case-card-body", c.fix)
+          );
+          grid.append(card);
+        });
+        box.append(grid);
+      }
+      section.append(box);
+    }
   },
   outcomes(section, block) {
     const groups = block.groups || [];
@@ -335,6 +467,8 @@ function renderCaseStudy(card, trigger, backCard) {
     const h3 = element("h3", "story-heading");
     h3.append(element("span", "story-num", `${num}.`), document.createTextNode(` ${block.title}`));
     section.append(h3);
+    if (block.keyMessage) section.append(element("p", "case-key-message", block.keyMessage));
+    if (block.intro) section.append(element("p", "case-section-intro", block.intro));
     caseBlockRenderers[block.type]?.(section, block, card);
     appendMedia(section, block, block.title);
     storyContent.append(section);
@@ -342,16 +476,18 @@ function renderCaseStudy(card, trigger, backCard) {
 
   const validLinks = [...(cs.relatedLinks || [])];
   const cardHref = safeLink(card.href);
-  if (cardHref) validLinks.unshift({ label: "View the work ↗", url: cardHref });
+  if (cardHref && !validLinks.some(l => safeLink(l.url) === cardHref)) {
+    validLinks.unshift({ label: "View the work ↗", url: cardHref });
+  }
   const relatedCards = (cs.relatedCards || [])
     .map(rc => makeCardJumpButton(rc.cardId, rc.label, card, "case-rel-btn is-card"))
     .filter(Boolean);
   const hasGallery = Array.isArray(cs.media) && cs.media.some(m => m?.src);
-  if (validLinks.length || relatedCards.length || hasGallery) {
+  if (validLinks.length || relatedCards.length || hasGallery || cs.relatedNote) {
     const num = String(blocks.length + 1).padStart(2, "0");
     const relSec = element("section", "story-section case-section");
     const h3 = element("h3", "story-heading");
-    h3.append(element("span", "story-num", `${num}.`), document.createTextNode(" 관련 자료 및 연결 프로젝트"));
+    h3.append(element("span", "story-num", `${num}.`), document.createTextNode(` ${cs.relatedTitle || "관련 자료 및 연결 프로젝트"}`));
     relSec.append(h3);
     if (hasGallery) appendMedia(relSec, { media: cs.media }, card.title);
     if (validLinks.length || relatedCards.length) {
@@ -368,6 +504,7 @@ function renderCaseStudy(card, trigger, backCard) {
       relatedCards.forEach(btn => actions.append(btn));
       relSec.append(actions);
     }
+    if (cs.relatedNote) relSec.append(element("p", "case-related-note", cs.relatedNote));
     storyContent.append(relSec);
   }
 }

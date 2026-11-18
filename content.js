@@ -508,15 +508,235 @@ const portfolio = {
       title: "코디세이 파이널 · Shopping Brain",
       subtitle: "사용자 조건·대화 맥락과 상품·리뷰 근거를 연결하는 AI 쇼핑 비서 팀 프로젝트",
       category: "projects",
-      tags: ["Final Project", "AI Shopping Assistant", "RAG / Agent"],
+      tags: ["Final Project", "LangGraph", "Hybrid RAG", "TypeScript", "PostgreSQL"],
       art: "shopping",
       cover: "images/shopping-brain-cover.png",
-      example: true,
-      summary: "사용자 조건과 대화 맥락을 상품 데이터·리뷰 근거와 연결해 탐색을 돕는 교육용 AI 쇼핑 비서 팀 프로젝트입니다.",
+      example: false,
+      summary: "5인 팀장으로 기획부터 프론트·백엔드·Brain 연동을 총괄하며, LangGraph와 Hybrid RAG로 찾은 추천 후보를 Commerce 서버 검증과 연결한 AI 쇼핑 비서 프로젝트입니다.",
       sections: [
-        ["개요", "사용자 조건·대화 맥락과 상품·리뷰 근거를 연결하는 AI 쇼핑 비서 팀 프로젝트입니다. (코디세이 파이널 교육용 프로젝트 · 활동 자료 시기: 2026.10)"],
-        ["상세 준비 중", "문제 정의, 본인 담당 파트, 아키텍처, QA·검증 내용 및 발표 결과는 다음 단계에서 자료 대조 후 채울 예정입니다."]
+        ["개요", "코디세이 AI 네이티브 파이널 프로젝트에서 5인 팀장으로 참여해 사용자 조건·대화 맥락을 상품·리뷰 근거와 연결하는 AI 쇼핑 비서를 개발했습니다."]
       ],
+      caseStudy: {
+        categoryLabel: "코디세이 AI 네이티브 Final Project · AI 쇼핑 비서",
+        headline: "AI의 추천을,\n검증 가능한 쇼핑 경험으로 연결하다.",
+        intro: "코디세이 AI 네이티브 파이널 프로젝트에서 5인 팀장으로 참여해, 사용자의 대화 맥락을 이해하고 실제 상품·리뷰 근거를 바탕으로 추천하는 AI 쇼핑 비서를 개발했습니다.\n프로젝트 기획 당시 참고한 토스 AI Engineer(Brain) 채용 요구 역량을 바탕으로, 단순 쇼핑몰 클론이 아니라 AI Agent·RAG·Commerce를 하나의 서비스 경험으로 연결하는 데 집중했습니다.\n(토스쇼핑 경험을 참고한 교육용 팀 프로젝트이며 토스의 공식 서비스가 아닙니다.)",
+        meta: [
+          { label: "프로젝트 · 기간", value: "Shopping Brain · 2026.10" },
+          { label: "유형", value: "코디세이 AI 네이티브 Final Project (5인 팀)" },
+          { label: "역할", value: "Team Lead / Product Planning / Frontend & Backend / Brain Integration" },
+          { label: "핵심 기술", value: "LangGraph, Hybrid RAG, TypeScript, React 19, Node.js 24, PostgreSQL" }
+        ],
+        blocks: [
+          {
+            type: "comparison",
+            title: "Problem Definition — 왜 이 문제를 선택했는가?",
+            keyMessage: "\"사용자의 조건을 이해하면서도, 실제 데이터에 근거한 AI 추천을 만들 수 있을까?\"",
+            intro: "프로젝트 기획 당시 AI Engineer 직무에서 요구하는 의도 파악·RAG·도구 연동·맥락 관리·평가 역량을 실제 작동하는 커머스 서비스 안에서 구현해보고자 했습니다.",
+            columns: [
+              {
+                tag: "USER EXPERIENCE",
+                title: "사용자 탐색 과정의 문제",
+                body: "기존 온라인 쇼핑에서는 원하는 상품을 찾기 위해 검색 조건을 반복해 바꾸고, 상세·옵션과 수많은 리뷰를 직접 대조해야 합니다.",
+                bullets: [
+                  "조건을 추가하거나 바꿀 때마다 이전 맥락이 끊겨 다시 설명·검색해야 하는 피로가 큼",
+                  "예산·용도·리뷰 성향처럼 복합적인 자연어 기준을 한 번에 비교하기 어려움"
+                ]
+              },
+              {
+                tag: "AI SYSTEM",
+                title: "기존 대화형 AI 추천의 문제",
+                body: "일반 대화형 AI는 자연스럽게 답할 수 있지만 실제 상품 가격·옵션·리뷰 근거와 연결되지 않으면 추천 결과를 신뢰하기 어렵습니다.",
+                bullets: [
+                  "존재하지 않는 상품·옵션이나 배송비가 빠진 가격을 말하면 실제 구매 경험으로 이어지지 않음",
+                  "리뷰 기반 설명 역시 실제 해당 상품의 리뷰 근거와 대조되지 않으면 환각 위험이 큼"
+                ]
+              }
+            ]
+          },
+          {
+            type: "metrics",
+            title: "Data & Constraints — 데이터와 제약",
+            keyMessage: "\"AI가 추천하는 정보는 실제 Commerce 데이터와 일치해야 한다.\"",
+            intro: "단순히 데이터가 크다는 점이 아니라, 아래 카탈로그 구조(test_items2 기준 · 현재 운영 실시간 수치 아님)에서 데이터 정합성과 근거 일치를 보장해야 했기 때문에 RAG 검색 뒤 서버 검증 계층이 필요했습니다.",
+            stats: [
+              { value: "1,500개", label: "상품 (Products)", caption: "beauty · fashion · food · living 4개 카테고리" },
+              { value: "1,917개", label: "옵션 (Variants)", caption: "상품별 옵션·가격·식별자 관계 유지" },
+              { value: "46,100개", label: "리뷰 (Reviews)", caption: "test_items2 카탈로그 연동 기준 규모" }
+            ],
+            constraints: [
+              { num: "01", title: "상품·옵션·리뷰 ID 및 데이터 관계 유지", desc: "추천 카드가 실제 상세·장바구니 흐름으로 이어지려면 카탈로그 원본 ID와 옵션 식별자가 정확히 일치해야 합니다." },
+              { num: "02", title: "실수집 리뷰와 합성 리뷰 출처 구분", desc: "검색된 리뷰의 REAL / SYNTHETIC 출처를 보존하고 표본을 전체 통계처럼 과장하지 않도록 제한해야 합니다." },
+              { num: "03", title: "가격·배송비와 사용자 예산 조건 정합성", desc: "'2만원대' 같은 자연어 예산을 상품가와 확인된 배송비 합계 기준으로 엄격하게 필터링해야 합니다." },
+              { num: "04", title: "검색 근거와 AI 설명 사이의 일치", desc: "RAG가 찾은 후보라도 Commerce 서버에서 가격·조건·리뷰 근거를 다시 검증한 범위 안에서만 설명해야 합니다." }
+            ],
+            callout: "이러한 제약 때문에 Hybrid RAG 검색 결과를 곧바로 사용자에게 노출하지 않고, Commerce 서버에서 가격·옵션·근거를 재검증하는 구조로 설계했습니다."
+          },
+          {
+            type: "chapters",
+            title: "Approach & Key Decisions — 핵심 기술과 설계 판단",
+            chapters: [
+              {
+                num: "DECISION 01",
+                eyebrow: "Agent & Retrieval Flow",
+                title: "LangGraph Agent 분기 제어와 Hybrid RAG",
+                badge: "대화 상태 · 검색 결합",
+                bullets: [
+                  "[LangGraph 분기 설계] prepare → route 진입 후 요청 성격에 따라 일반 대화(converse), 특정 상품 리뷰 요약(review-summary), 탐색 조건 갱신(plan → clarify | retrieve → respond)으로 분기했습니다.",
+                  "[상태·중복 실행 제어] Shopping Plan으로 탐색 조건을 유지하고, Brain PostgreSQL Checkpointer·Turn Lock·Fencing을 통해 이전 실행 결과가 최신 상태를 덮어쓰지 않도록 구성했습니다.",
+                  "[Hybrid RAG 검색] 외부 DGX RAG API(POST /v1/rag/search)에서 키워드 일치를 잡는 BM25와 의미 검색을 보완하는 Dense Vector 검색 결과를 RRF(k=60)로 결합해 후보와 리뷰 근거를 확보했습니다."
+                ]
+              },
+              {
+                num: "DECISION 02",
+                eyebrow: "Core Architectural Choice",
+                title: "Agent 판단과 Commerce 서버 검증의 책임 분리",
+                badge: "핵심 설계 원칙",
+                highlight: true,
+                bullets: [
+                  "[AI(Brain)의 책임] 사용자의 자연어 의도와 조건 변화를 해석하고, 필요한 경로/도구를 선택한 뒤, 검증된 후보 범위 안에서 이해하기 쉬운 추천 이유와 리뷰 요약을 생성합니다.",
+                  "[Commerce 서버의 책임] 상품·옵션 ID 유효성, 배송비 포함 가격 합계 필터, 원본 리뷰 ID 기준 중복 제거 및 정렬, 세션·권한·CSRF 검증 등 정확성이 필요한 규칙을 결정론적으로 검증합니다.",
+                  "[선택 이유] LLM의 강점인 자연어 문맥 해석을 최대한 살리면서도, 가격 오계산·없는 옵션 추천·근거 없는 장점 서술 같은 커머스 치명 오류를 코드로 차단하기 위한 선택입니다."
+                ]
+              }
+            ],
+            diagram: {
+              label: "VERIFIED ARCHITECTURE & GRAPH FLOW (src/brain/graph.ts · README 기준)",
+              steps: [
+                { role: "ENTRY", title: "사용자 요청 및 대화 맥락", detail: "React 19 쇼핑·채팅 UI → Node.js API (세션·권한·CSRF 검증)" },
+                {
+                  role: "ORCHESTRATION",
+                  title: "LangGraph Agent — 의도 판단 · 분기 선택",
+                  detail: "prepare → route (BRAIN_ROUTE_MODE 기반 조건 분기 & Shopping Plan 유지)",
+                  branches: [
+                    { code: "converse", label: "일반 대화 · 안내" },
+                    { code: "review-summary", label: "특정 상품 리뷰 요약" },
+                    { code: "plan → clarify", label: "조건 부족 시 질문" },
+                    { code: "plan → retrieve", label: "상품 검색 경로", active: true }
+                  ]
+                },
+                { role: "RETRIEVAL", title: "Hybrid RAG — 상품·리뷰 근거 검색", detail: "외부 DGX RAG API (BM25 + Dense Vector → RRF 결합 · Tailscale/TLS 연동)" },
+                { role: "VERIFICATION BOUNDARY", title: "Commerce API — 상품·옵션·가격·근거 검증", detail: "카탈로그 ID 확인 · 배송비 합계 필터 · 리뷰 ID 중복 제거 · Ranking · 소유권/Fencing", highlight: true },
+                { role: "RESPONSE", title: "검증된 추천 및 근거 기반 설명", detail: "LLM(Claude 등)이 검증된 후보와 확인된 리뷰 근거 범위 안에서 추천 이유 설명" }
+              ],
+              stores: [
+                { name: "Brain PostgreSQL", desc: "대화 · Long-term Memory · Checkpoint" },
+                { name: "업무 PostgreSQL", desc: "사용자 · 찜 · 카트 · 주문" },
+                { name: "DGX PostgreSQL (Read-Only)", desc: "상품 · 옵션 · 리뷰 (test_items2)" }
+              ]
+            }
+          },
+          {
+            type: "evaluation",
+            title: "Evaluation & Findings — 실험과 검증",
+            keyMessage: "\"AI 추천의 품질은 모델의 답변뿐 아니라 검색 근거와 실제 서비스 동작까지 검증해야 한다.\"",
+            experiments: {
+              label: "A. 팀 RAG 임베딩 비교 실험 (오프라인 비교)",
+              scope: "팀(RAG 담당)에서 test_items2 beauty 범주(상품 781개 · 리뷰 34,545개 · 청크 78,595개)에 대해 BM25 Top 20 + Dense Top 20 RRF(k=60) 조건으로 비교한 기록입니다. (작성자 단독 실험 성과가 아님)",
+              metricLabel: "Hit@1 (긍정 질의 10개)",
+              rows: [
+                { name: "BM25 단독", dim: "Sparse", hit1: 60, count: "6/10", mrr: "0.767" },
+                { name: "BM25 + MiniLM-L12-v2", dim: "384d", hit1: 40, count: "4/10", mrr: "0.595" },
+                { name: "BM25 + multilingual-e5-large", dim: "1,024d", hit1: 80, count: "8/10", mrr: "0.883", top: true },
+                { name: "BM25 + BGE-M3 dense", dim: "1,024d", hit1: 80, count: "8/10", mrr: "0.900", top: true },
+                { name: "BM25 + Qwen3-Embedding-0.6B", dim: "1,024d", hit1: 80, count: "8/10", mrr: "0.883", top: true }
+              ],
+              caveat: "범주 내 긍정 질의 10개와 임시 규칙 라벨을 사용한 제한적 오프라인 실험이므로 전체 추천 정확도·만족도를 입증한 수치로 해석할 수 없습니다. 범위 밖(OOD) 질의 2건에서도 모두 상품을 반환해 별도 거절 기준이 필요하며, 기존 서비스 벡터(384d MiniLM)와 1,024d 모델은 인덱스·차원 정합 후 전환해야 함을 확인했습니다."
+            },
+            qa: {
+              label: "B. 서비스 QA 및 회귀 테스트",
+              badges: [
+                { value: "58/58 PASS", label: "핵심 회귀 테스트 (2026-10-20 패키징)" },
+                { value: "PASS", label: "Typecheck / Frontend Build" },
+                { value: "5인 팀 내부 QA", label: "팀원 전원 사용자 관점 테스트" }
+              ],
+              scope: "단위·계약 회귀 테스트 통과와 개발 중 내부 QA 피드백 반영은 실제 Claude 응답·외부 DGX 전체 실시간 E2E 검증과 구분해 기록했습니다.",
+              cases: [
+                {
+                  issue: "예산·배송비 범위 및 리뷰 정렬 불일치",
+                  fix: "'2만원대', '1~3만원대' 요청 시 배송비 포함 합계 기준으로 필터링하고, 동일 리뷰의 여러 청크를 원본 리뷰 ID 기준으로 중복 제거해 집계하도록 개선했습니다."
+                },
+                {
+                  issue: "특정 상품 리뷰 요청의 오분류 & 조건 반복 질문",
+                  fix: "상품 리뷰 요청을 review-summary 전용 경로(productId·목록 번호·페이지 컨텍스트)로 분리하고, 명확한 조건은 Shopping Plan에 유지해 불필요한 재질문을 줄였습니다."
+                }
+              ]
+            }
+          },
+          {
+            type: "pillars",
+            title: "Delivery & My Contribution — 서비스 통합과 나의 기여",
+            keyMessage: "\"AI 기술을 사용자에게 실제로 작동하는 하나의 서비스 경험으로 연결하다.\"",
+            emphasis: true,
+            pillars: [
+              {
+                num: "01",
+                title: "프로젝트 방향 설정",
+                summary: "5인 팀장으로서 공통 목표 조율",
+                bullets: [
+                  "팀원들의 서로 다른 관심사와 강점을 조율해 직무 역량을 보여줄 수 있는 Shopping Brain 중심 목표 수립",
+                  "단순 쇼핑몰 구현이나 모델 실험으로 흩어지지 않고 하나의 사용자 경험으로 모이도록 범위 관리"
+                ]
+              },
+              {
+                num: "02",
+                title: "서비스 기획 · 풀스택 구현",
+                summary: "탐색부터 AI 채팅까지 핵심 흐름 구현",
+                bullets: [
+                  "상품 탐색, 상세, 옵션, 장바구니, AI 채팅 등 서비스 요구사항과 사용자 흐름 정의",
+                  "React 19 프론트엔드 화면과 Node.js/TypeScript 백엔드 API 연동 구현"
+                ]
+              },
+              {
+                num: "03",
+                title: "Brain · Commerce 시스템 통합",
+                summary: "AI 응답이 실제 쇼핑 화면과 이어지게 연결",
+                bullets: [
+                  "쇼핑 UI, Commerce API, LangGraph Brain 결과가 단일 서비스 흐름으로 이어지도록 통합",
+                  "추천 상품 카드에서 실제 상세 정보와 개인화 선호 관리까지 끊김 없이 연결"
+                ]
+              },
+              {
+                num: "04",
+                title: "QA 개선 · 외부 테스트 환경 조율",
+                summary: "사용자 피드백을 시스템 개선으로 연결",
+                bullets: [
+                  "팀 내부 QA 피드백을 UI·의도 판단·검색·데이터 검증 원인별로 분류해 수정 요구사항 반영",
+                  "제출용 회귀 검증과 외부 QA 접속 흐름에서 동작을 확인하며 완성도 보완"
+                ]
+              }
+            ],
+            runtimeNotes: {
+              label: "구현된 시스템 구성 및 QA 접속 범위 (상용 24시간 운영과 구분)",
+              items: [
+                "[웹 · API] React 19 쇼핑몰·AI 채팅 UI와 Node.js 24 / TypeScript 백엔드 API (세션·권한·CSRF 검증)",
+                "[AI · 상태 DB] LangGraph AI Brain과 Brain PostgreSQL(대화·Memory·Checkpoint) / 업무 PostgreSQL 분리",
+                "[외부 RAG · QA 접속] Tailscale 기반 외부 DGX 카탈로그·RAG 연동 및 로컬 서버 + Cloudflare Tunnel 외부 QA 접속 구성 (상용 무중단 운영이나 전체 공개 E2E 완료로 확대 표기하지 않음)"
+              ]
+            }
+          },
+          {
+            type: "outcomes",
+            title: "Reflection — 배운 점",
+            takeaway: "좋은 AI 서비스는 그럴듯한 답변을 생성하는 데서 끝나지 않고, 실제 데이터와 연결된 신뢰할 수 있는 결과를 제공해야 합니다.",
+            groups: [
+              {
+                label: "설계와 리딩을 통해 얻은 핵심 인사이트",
+                bullets: [
+                  "[판단과 검증의 경계 설계] LLM에게 모든 결정을 맡기기보다, 자연어 해석·설명 역할과 서버의 결정론적 검증 역할을 분리할 때 서비스 신뢰도가 생긴다는 점을 체감했습니다.",
+                  "[기술과 경험의 연결] 5인 팀장으로서 프론트엔드·백엔드·RAG·에이전트·DB가 각자 동작하는 데 그치지 않고 사용자가 체감하는 하나의 쇼핑 흐름으로 맞물리게 조율하는 경험을 쌓았습니다."
+                ]
+              }
+            ]
+          }
+        ],
+        relatedTitle: "Resources — 관련 자료",
+        relatedNote: "발표 PPT 원본과 서비스 스크린샷·아키텍처 원본 이미지는 다음 단계에서 추가할 예정입니다.",
+        relatedLinks: [
+          { label: "GitHub 제출용 저장소 (소스 · README · 비교 보고서) ↗", url: "https://github.com/hongbinwee/codyssey-final-project-toss-shopping-ai-brain" }
+        ],
+        relatedCards: [],
+        media: []
+      },
       href: "https://github.com/hongbinwee/codyssey-final-project-toss-shopping-ai-brain"
     },
     {
